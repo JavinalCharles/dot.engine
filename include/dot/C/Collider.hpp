@@ -2,9 +2,9 @@
 
 #include <memory>
 #include <SFML/Graphics.hpp>
-#include "Sigma/C/Component.hpp"
+#include "dot/C/Component.hpp"
 
-namespace Sigma
+namespace dot
 {
 struct Manifold
 {
@@ -15,7 +15,7 @@ struct Manifold
 class Collider : public Component
 {
 public:
-	Collider(Sigma::Entity* owner);
+	Collider(dot::Entity* owner);
 	virtual ~Collider();
 
 	virtual Manifold intersects(std::shared_ptr<Collider> other) = 0;
@@ -28,4 +28,4 @@ private:
 	unsigned m_layer;
 };
 
-}; // namespace Sigma
+}; // namespace dot

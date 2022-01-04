@@ -1,19 +1,19 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Sigma/C/Component.hpp"
-#include "Sigma/Window.hpp"
+#include "dot/C/Component.hpp"
+#include "dot/Window.hpp"
 
-namespace Sigma
+namespace dot
 {
 
-class Drawable : public Sigma::Component
+class Drawable : public dot::Component
 {
 public:
-	Drawable(Sigma::Entity* owner, unsigned sortOrder = 0u, unsigned drawLayer = 0u);
+	Drawable(dot::Entity* owner, unsigned sortOrder = 0u, unsigned drawLayer = 0u);
 	virtual ~Drawable();
 	
-	virtual void render(Sigma::Window& window) = 0;
+	virtual void render(dot::Window& window) = 0;
 
 	void setSortOrder(unsigned order);
 	unsigned getSortOrder() const;
@@ -28,4 +28,4 @@ protected:
 	unsigned m_layer;
 }; // class Drawable
 
-}; // namespace Sigma
+}; // namespace dot

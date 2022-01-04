@@ -1,13 +1,13 @@
-#include "Sigma/E/Entity.hpp"
+#include "dot/E/Entity.hpp"
 
-using Sigma::Entity;
+using dot::Entity;
 
-Entity::Entity(Sigma::SharedContext* context)
+Entity::Entity(dot::SharedContext* context)
 	: context(context),
 	m_queuedForRemoval(false)
 {
-	this->transform = this->addComponent<Sigma::Transform>();
-	this->instanceID = this->addComponent<Sigma::InstanceID>();
+	this->transform = this->addComponent<dot::Transform>();
+	this->instanceID = this->addComponent<dot::InstanceID>();
 }
 
 void Entity::awake()
@@ -47,7 +47,7 @@ void Entity::render(Window& window)
 	m_drawable->render(window);
 }
 
-std::shared_ptr<Sigma::Drawable> Entity::getDrawable()
+std::shared_ptr<dot::Drawable> Entity::getDrawable()
 {
 	return m_drawable;
 }

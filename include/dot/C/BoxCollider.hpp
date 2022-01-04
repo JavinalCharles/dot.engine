@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Sigma/C/Component.hpp"
-#include "Sigma/C/Collider.hpp"
+#include "dot/C/Component.hpp"
+#include "dot/C/Collider.hpp"
 
-using Sigma::Collider;
-using Sigma::Manifold;
+using dot::Collider;
+using dot::Manifold;
 
-namespace Sigma
+namespace dot
 {
 
 enum class Origin {
@@ -15,10 +15,10 @@ enum class Origin {
 	MiBottom
 }; // enum Origin
 
-class BoxCollider : public Sigma::Collider
+class BoxCollider : public dot::Collider
 {
 public:
-	BoxCollider(Sigma::Entity* owner);
+	BoxCollider(dot::Entity* owner);
 	virtual ~BoxCollider();
 
 	virtual Manifold intersects(std::shared_ptr<Collider> other) override;
@@ -42,4 +42,4 @@ private:
 	sf::Vector2f m_offset;
 };
 
-}; // namespace Sigma
+}; // namespace dot

@@ -1,7 +1,7 @@
-#include "Sigma/Utilities/WorkingDirectory.hpp"
+#include "dot/Utilities/WorkingDirectory.hpp"
 
 namespace fs = std::experimental::filesystem;
-using Sigma::WorkingDirectory;
+using dot::WorkingDirectory;
 
 WorkingDirectory::WorkingDirectory()
 	: m_path(fs::current_path())

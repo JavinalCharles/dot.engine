@@ -1,7 +1,7 @@
-#include "Sigma/Events/KeyboardInput.hpp"
+#include "dot/Events/KeyboardInput.hpp"
 
-using Sigma::KeyboardInput;
-using Sigma::Bitmask;
+using dot::KeyboardInput;
+using dot::Bitmask;
 
 KeyboardInput::KeyboardInput()
 	: m_keyBinds(),

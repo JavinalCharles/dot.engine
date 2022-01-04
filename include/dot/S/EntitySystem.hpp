@@ -2,11 +2,11 @@
 
 #include <memory>
 #include <vector>
-#include "Sigma/E/Entity.hpp"
+#include "dot/E/Entity.hpp"
 
-using Sigma::Entity;
+using dot::Entity;
 
-namespace Sigma
+namespace dot
 {
 class EntitySystem
 {
@@ -16,7 +16,7 @@ public:
 
 	void update(float deltaTime);
 	void lateUpdate(float deltaTime);
-	void render(Sigma::Window& window);
+	void render(dot::Window& window);
 
 	void processNewObjects();
 

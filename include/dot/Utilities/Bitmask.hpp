@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-namespace Sigma
+namespace dot
 {
 class Bitmask
 {
@@ -56,4 +56,4 @@ private:
 
 }; // class Bitmask
 
-}; // namespace Sigma
+}; // namespace dot

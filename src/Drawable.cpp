@@ -1,9 +1,9 @@
-#include "Sigma/C/Drawable.hpp"
+#include "dot/C/Drawable.hpp"
 
-using Sigma::Component;
-using Sigma::Drawable;
-using Sigma::Entity;
-using Sigma::Window;
+using dot::Component;
+using dot::Drawable;
+using dot::Entity;
+using dot::Window;
 
 
 Drawable::Drawable(Entity* owner, unsigned sortOrder, unsigned drawLayer)

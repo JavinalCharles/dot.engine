@@ -2,10 +2,10 @@
 
 #include <memory>
 #include <unordered_map>
-#include "Sigma/Scene.hpp"
-#include "Sigma/Window.hpp"
+#include "dot/Scene.hpp"
+#include "dot/Window.hpp"
 
-namespace Sigma
+namespace dot
 {
 
 class SceneManager
@@ -43,4 +43,4 @@ private:
 
 	unsigned int insertedSceneID;
 }; // class SceneManager
-}; // namespace Sigma
+}; // namespace dot

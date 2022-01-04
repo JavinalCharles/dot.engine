@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Sigma/C/Component.hpp"
+#include "dot/C/Component.hpp"
 
-namespace Sigma
+namespace dot
 {
 
-using Sigma::Component;
+using dot::Component;
 
 class Transform : public Component
 {
 public:
-	Transform(Sigma::Entity* owner);
+	Transform(dot::Entity* owner);
 
 	void setPosition(float x, float y);
 	void setPosition(const sf::Vector2f& pos);
@@ -32,4 +32,4 @@ private:
 	bool m_isStaticTransform;
 }; // class Transform
 
-}; // namespace Sigma
+}; // namespace dot

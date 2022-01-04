@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Sigma/Window.hpp"
+#include "dot/Window.hpp"
 
-namespace Sigma
+namespace dot
 {
 class Entity;
 
 class Component
 {
 public:
-	Component(Sigma::Entity* owner);
+	Component(dot::Entity* owner);
 	virtual ~Component();
 
 	virtual void awake();
@@ -17,9 +17,9 @@ public:
 	virtual void update(float deltaTime);
 	virtual void lateUpdate(float deltaTime);
 
-	Sigma::Entity* getOwner();
+	dot::Entity* getOwner();
 
 protected:
-	Sigma::Entity* m_owner;
+	dot::Entity* m_owner;
 };// class Component
-}; // namespace Sigma
+}; // namespace dot

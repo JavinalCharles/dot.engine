@@ -1,7 +1,7 @@
-#include "Sigma/C/Component.hpp"
+#include "dot/C/Component.hpp"
 
-using Sigma::Component;
-using Sigma::Entity;
+using dot::Component;
+using dot::Entity;
 
 Component::Component(Entity* owner)
 	: m_owner(owner)

@@ -1,6 +1,6 @@
-#include "Sigma/Utilities/Bitmask.hpp"
+#include "dot/Utilities/Bitmask.hpp"
 
-using Sigma::Bitmask;
+using dot::Bitmask;
 
 Bitmask::Bitmask()
 	: m_bits(0)

@@ -1,6 +1,6 @@
-#include "Sigma/Engine.hpp"
+#include "dot/Engine.hpp"
 
-using namespace Sigma;
+using dot::Engine;
 
 Engine::Engine()
 	: m_sceneManager(),

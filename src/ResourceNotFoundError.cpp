@@ -1,6 +1,6 @@
-#include "Sigma/ResourceNotFoundError.hpp"
+#include "dot/ResourceNotFoundError.hpp"
 
-using Sigma::ResourceNotFoundError;
+using dot::ResourceNotFoundError;
 
 ResourceNotFoundError::ResourceNotFoundError(const std::string& what)
 	: std::runtime_error("Resource not found: " + what)

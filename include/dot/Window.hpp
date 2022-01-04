@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-namespace Sigma
+namespace dot
 {
 
 class Window
@@ -32,4 +32,4 @@ private:
 
 }; // class Window
 
-}; // class Sigma
+}; // class dot

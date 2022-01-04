@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Sigma/C/Drawable.hpp"
-#include "Sigma/C/Transform.hpp"
-#include "Sigma/ResourceAllocator.hpp"
+#include "dot/C/Drawable.hpp"
+#include "dot/C/Transform.hpp"
+#include "dot/ResourceAllocator.hpp"
 
-namespace Sigma
+namespace dot
 {
-class Sprite : public Sigma::Drawable
+class Sprite : public dot::Drawable
 {
-	Sprite(Sigma::Entity* owner, unsigned sortOrder = 0u, unsigned drawLayer = 0u);
+	Sprite(dot::Entity* owner, unsigned sortOrder = 0u, unsigned drawLayer = 0u);
 
 	/**
 	 * Sprite::load(filePath)
@@ -38,4 +38,4 @@ private:
 	unsigned m_currentTextureID;
 };
 
-}; // namespace Sigma
+}; // namespace dot

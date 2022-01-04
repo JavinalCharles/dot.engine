@@ -1,7 +1,7 @@
 #pragma once
 #include "Window.hpp"
 
-namespace Sigma
+namespace dot
 {
 
 class Scene
@@ -43,4 +43,4 @@ public:
 	virtual void render(Window& window) = 0;
 }; // class Scene
 
-}; // namespace Sigma
+}; // namespace dot

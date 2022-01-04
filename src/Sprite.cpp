@@ -1,9 +1,9 @@
-#include "Sigma/C/Sprite.hpp"
-#include "Sigma/E/Entity.hpp"
+#include "dot/C/Sprite.hpp"
+#include "dot/E/Entity.hpp"
 
-using Sigma::Drawable;
-using Sigma::Sprite;
-using Sigma::Entity;
+using dot::Drawable;
+using dot::Sprite;
+using dot::Entity;
 
 Sprite::Sprite(Entity* owner, unsigned sortOrder, unsigned drawLayer)
 	: Drawable(owner, sortOrder, drawLayer),

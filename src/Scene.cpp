@@ -1,6 +1,6 @@
-#include "Sigma/Scene.hpp"
+#include "dot/Scene.hpp"
 
-using Sigma::Scene;
+using dot::Scene;
 
 void Scene::onActivate()
 {

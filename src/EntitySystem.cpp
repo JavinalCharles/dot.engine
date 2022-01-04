@@ -1,6 +1,6 @@
-#include "Sigma/S/EntitySystem.hpp"
+#include "dot/S/EntitySystem.hpp"
 
-using Sigma::EntitySystem;
+using dot::EntitySystem;
 
 void EntitySystem::update(float deltaTime)
 {
@@ -18,7 +18,7 @@ void EntitySystem::lateUpdate(float deltaTime)
 	}
 }
 
-void EntitySystem::render(Sigma::Window& window)
+void EntitySystem::render(dot::Window& window)
 {
 	// TODO
 }

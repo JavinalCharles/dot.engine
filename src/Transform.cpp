@@ -1,7 +1,7 @@
-#include "Sigma/C/Transform.hpp"
+#include "dot/C/Transform.hpp"
 
-using Sigma::Transform;
-using Sigma::Entity;
+using dot::Transform;
+using dot::Entity;
 
 Transform::Transform(Entity* owner)
 	: Component(owner),

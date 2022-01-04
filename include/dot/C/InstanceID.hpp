@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Sigma/C/Component.hpp"
+#include "dot/C/Component.hpp"
 
-namespace Sigma
+namespace dot
 {
-class InstanceID : public Sigma::Component
+class InstanceID : public dot::Component
 {
 public:
-	InstanceID(Sigma::Entity* owner);
+	InstanceID(dot::Entity* owner);
 
 	unsigned long long get() const;
 private:
@@ -15,4 +15,4 @@ private:
 	unsigned long long m_id;
 
 }; // class InstanceID
-}; // namespace Sigma
+}; // namespace dot

@@ -1,11 +1,11 @@
-#include "Sigma/C/InstanceID.hpp"
+#include "dot/C/InstanceID.hpp"
 
-using Sigma::InstanceID;
-using Sigma::Component;
+using dot::InstanceID;
+using dot::Component;
 
-unsigned long long Sigma::InstanceID::count = 0u;
+unsigned long long dot::InstanceID::count = 0u;
 
-InstanceID::InstanceID(Sigma::Entity* owner)
+InstanceID::InstanceID(dot::Entity* owner)
 	: Component(owner),
 	m_id(++count)
 {

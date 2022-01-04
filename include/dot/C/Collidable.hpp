@@ -1,12 +1,12 @@
 #pragma once
 
 #include <memory>
-#include "Sigma/C/BoxCollider.hpp"
+#include "dot/C/BoxCollider.hpp"
 
-namespace Sigma
+namespace dot
 {
 
-using Sigma::BoxCollider;
+using dot::BoxCollider;
 
 class Collidable
 {
@@ -14,4 +14,4 @@ class Collidable
 	virtual void onCollisionStay(std::shared_ptr<BoxCollider>& other) = 0;
 	virtual void onCollisionExit(std::shared_ptr<BoxCollider>& other) = 0;
 }; // class Collidable
-}; // namespace Sigma
+}; // namespace dot

@@ -2,9 +2,9 @@
 
 #include <unordered_map>
 #include <SFML/Window.hpp>
-#include "Sigma/Utilities/Bitmask.hpp"
+#include "dot/Utilities/Bitmask.hpp"
 
-namespace Sigma
+namespace dot
 {
 
 class KeyboardInput
@@ -27,4 +27,4 @@ private:
 	Bitmask m_thisFrameKeys;
 	Bitmask m_lastFrameKeys;
 }; // class KeyboardInput
-}; // namespace Sigma
+}; // namespace dot

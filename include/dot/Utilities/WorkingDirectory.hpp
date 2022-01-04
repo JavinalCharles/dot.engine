@@ -4,7 +4,7 @@
 
 namespace fs = std::experimental::filesystem;
 
-namespace Sigma
+namespace dot
 {
 
 class WorkingDirectory
@@ -16,4 +16,4 @@ public:
 private:
 	fs::path m_path;
 }; // class WorkingDirectory
-}; // namespace Sigma
+}; // namespace dot

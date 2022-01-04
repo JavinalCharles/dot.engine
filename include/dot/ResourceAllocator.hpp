@@ -4,9 +4,9 @@
 #include <memory>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "Sigma/ResourceNotFoundError.hpp"
+#include "dot/ResourceNotFoundError.hpp"
 
-namespace Sigma
+namespace dot
 {
 
 template <typename T>
@@ -42,7 +42,7 @@ unsigned ResourceAllocator<T>::add(const std::string& filePath)
 	std::shared_ptr<T> resource = std::make_shared<T>();
 	if (!resource->loadFromFile(filePath))
 	{
-		throw Sigma::ResourceNotFoundError(filePath);
+		throw dot::ResourceNotFoundError(filePath);
 	}
 	m_resources.insert(std::make_pair(m_currentId, resource));
 	return m_currentId++;
@@ -75,4 +75,4 @@ bool ResourceAllocator<T>::has(unsigned id)
 	return m_resources.find(id) != m_resources.end();
 }
 
-}; // namespace Sigma
+}; // namespace dot

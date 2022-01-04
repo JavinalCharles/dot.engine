@@ -1,12 +1,12 @@
-#include "Sigma/C/BoxCollider.hpp"
-#include "Sigma/E/Entity.hpp"
+#include "dot/C/BoxCollider.hpp"
+#include "dot/E/Entity.hpp"
 #include <cmath>
 
 using std::fabs;
-using Sigma::BoxCollider;
-using Sigma::Collider;
-using Sigma::Entity;
-using Sigma::Origin;
+using dot::BoxCollider;
+using dot::Collider;
+using dot::Entity;
+using dot::Origin;
 
 BoxCollider::BoxCollider(Entity* owner)
 	: Collider(owner),

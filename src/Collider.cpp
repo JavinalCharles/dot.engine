@@ -1,7 +1,7 @@
-#include "Sigma/C/Collider.hpp"
+#include "dot/C/Collider.hpp"
 
-using Sigma::Collider;
-using Sigma::Entity;
+using dot::Collider;
+using dot::Entity;
 
 Collider::Collider(Entity* owner)
 	: Component(owner),

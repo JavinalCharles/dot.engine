@@ -1,6 +1,6 @@
-#include "Sigma/SceneManager.hpp"
+#include "dot/SceneManager.hpp"
 
-using Sigma::SceneManager;
+using dot::SceneManager;
 
 SceneManager::SceneManager()
 	: m_scenes(0),

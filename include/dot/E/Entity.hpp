@@ -2,19 +2,19 @@
 
 #include <vector>
 #include <memory>
-#include "Sigma/Window.hpp"
-#include "Sigma/C/Component.hpp"
-#include "Sigma/C/Transform.hpp"
-#include "Sigma/C/InstanceID.hpp"
-#include "Sigma/C/Drawable.hpp"
-#include "Sigma/C/Collidable.hpp"
-#include "Sigma/SharedContext.hpp"
+#include "dot/Window.hpp"
+#include "dot/C/Component.hpp"
+#include "dot/C/Transform.hpp"
+#include "dot/C/InstanceID.hpp"
+#include "dot/C/Drawable.hpp"
+#include "dot/C/Collidable.hpp"
+#include "dot/SharedContext.hpp"
 
-namespace Sigma
+namespace dot
 {
 
-using Sigma::Component;
-using Sigma::SharedContext;
+using dot::Component;
+using dot::SharedContext;
 
 class Entity
 {
@@ -50,7 +50,7 @@ public:
 	template <typename T>
 	std::shared_ptr<T> getComponent();
 
-	std::shared_ptr<Sigma::Drawable> getDrawable();
+	std::shared_ptr<dot::Drawable> getDrawable();
 
 	bool isQueuedForRemoval();
 	void queueForRemoval();
@@ -58,18 +58,18 @@ public:
 
 public: // Public Attributes
 
-	std::shared_ptr<Sigma::Transform> transform;
-	std::shared_ptr<Sigma::InstanceID> instanceID;
+	std::shared_ptr<dot::Transform> transform;
+	std::shared_ptr<dot::InstanceID> instanceID;
 
-	Sigma::SharedContext* context;
+	dot::SharedContext* context;
 
 private:
 	std::vector<std::shared_ptr<Component>> m_components;
 
 	bool m_queuedForRemoval;
 
-	std::shared_ptr<Sigma::Drawable> m_drawable;
-	std::vector<std::shared_ptr<Sigma::Collidable>> m_collidables;
+	std::shared_ptr<dot::Drawable> m_drawable;
+	std::vector<std::shared_ptr<dot::Collidable>> m_collidables;
 }; // class Entity
 
 /************************************
@@ -78,7 +78,7 @@ private:
 template<typename T>
 std::shared_ptr<T> Entity::addComponent()
 {
-	static_assert(std::is_base_of<Component, T>::value, "Error. T must be a derived type of Sigma::C::Component. Assertion returned false.");
+	static_assert(std::is_base_of<Component, T>::value, "Error. T must be a derived type of dot::C::Component. Assertion returned false.");
 	// Check that the Entity no longer have a
 	// Component of T type. Prevent it if found.
 	for(auto& existingComponent : m_components)
@@ -95,9 +95,9 @@ std::shared_ptr<T> Entity::addComponent()
 	m_components.push_back(newComponent);
 
 	// Check if the component is a Drawable
-	if (std::dynamic_pointer_cast<Sigma::Drawable>(newComponent))
+	if (std::dynamic_pointer_cast<dot::Drawable>(newComponent))
 	{
-		m_drawable = std::dynamic_pointer_cast<Sigma::Drawable>(newComponent);
+		m_drawable = std::dynamic_pointer_cast<dot::Drawable>(newComponent);
 	}
 
 	return newComponent;
@@ -115,4 +115,4 @@ std::shared_ptr<T> Entity::getComponent()
 	}
 }
 
-}; // namespace Sigma
+}; // namespace dot

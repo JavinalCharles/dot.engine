@@ -1,4 +1,4 @@
-TARGET = ./lib/libsigma.a
+TARGET = ./lib/libdot.engine.a
 CC = g++
 
 INC_DIR = ./include

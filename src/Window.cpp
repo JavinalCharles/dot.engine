@@ -1,6 +1,6 @@
-#include "Sigma/Window.hpp"
+#include "dot/Window.hpp"
 
-using Sigma::Window;
+using dot::Window;
 
 Window::Window()
 	: m_window(sf::VideoMode(1024, 960), "Game Window", sf::Style::Default)

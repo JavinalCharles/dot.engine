@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-namespace Sigma
+namespace dot
 {
 
 class ResourceNotFoundError : public std::runtime_error
@@ -12,4 +12,4 @@ public:
 	ResourceNotFoundError(const char* what);
 }; // class ResourceNotFoundError
 
-}; // namespace Sigma
+}; // namespace dot
