@@ -5,7 +5,7 @@ using dot::SceneManager;
 SceneManager::SceneManager()
 	: m_scenes(0),
 	m_currentScene(nullptr),
-	insertedSceneID(0)
+	m_insertedSceneID(0)
 {
 
 }
@@ -44,11 +44,11 @@ void SceneManager::render(Window& window)
 
 unsigned int SceneManager::add(std::shared_ptr<Scene> scene)
 {
-	auto inserted = m_scenes.insert(std::make_pair(insertedSceneID++, scene));
+	auto inserted = m_scenes.insert(std::make_pair(m_insertedSceneID++, scene));
 
 	inserted.first->second->onCreate();
 
-	return insertedSceneID-1;
+	return m_insertedSceneID-1;
 }
 
 void SceneManager::remove(unsigned int id)

@@ -8,6 +8,8 @@ void EntitySystem::update(float deltaTime)
 	{
 		e->update(deltaTime);
 	}
+
+	m_renderer.update(deltaTime);
 }
 
 void EntitySystem::lateUpdate(float deltaTime)
@@ -20,7 +22,7 @@ void EntitySystem::lateUpdate(float deltaTime)
 
 void EntitySystem::render(dot::Window& window)
 {
-	// TODO
+	m_renderer.render(window);
 }
 
 void EntitySystem::add(std::shared_ptr<Entity> entity)
@@ -48,6 +50,8 @@ void EntitySystem::processNewObjects()
 
 		m_entities.insert(m_entities.end(), m_newEntities.begin(), m_newEntities.end());
 
+		m_renderer.add(m_newEntities);
+
 		m_newEntities.clear();
 	}
 }
@@ -73,6 +77,6 @@ void EntitySystem::processRemovals()
 
 	if (removed)
 	{
-		// TODO
+		m_renderer.processRemovals();
 	}
 }

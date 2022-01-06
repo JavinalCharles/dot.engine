@@ -5,6 +5,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "dot/ResourceNotFoundError.hpp"
+#include <iostream>
 
 namespace dot
 {
@@ -39,11 +40,14 @@ ResourceAllocator<T>::ResourceAllocator()
 template <typename T>
 unsigned ResourceAllocator<T>::add(const std::string& filePath)
 {
+	
+
 	std::shared_ptr<T> resource = std::make_shared<T>();
 	if (!resource->loadFromFile(filePath))
 	{
 		throw dot::ResourceNotFoundError(filePath);
 	}
+	std::cout << "Added resource with ID: " << m_currentId << " from:" << filePath << std::endl;
 	m_resources.insert(std::make_pair(m_currentId, resource));
 	return m_currentId++;
 }

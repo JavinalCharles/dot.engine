@@ -13,7 +13,7 @@ CPPFLAGS = $(INC_FLAGS) -std=c++17
 LIBFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lstdc++fs
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CC) $(CPPFLAGS) -c $< -o $@ $(LIBFLAGS)
+	$(CC) $(CPPFLAGS) -c $< -o $@
 
 $(TARGET): $(OBJS)
 	ar rcs $@ $(OBJS)

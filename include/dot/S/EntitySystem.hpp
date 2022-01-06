@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include "dot/E/Entity.hpp"
+#include "dot/S/RenderSystem.hpp"
 
 using dot::Entity;
 
@@ -25,9 +26,10 @@ public:
 private:
 	std::vector<std::shared_ptr<Entity>> m_entities;
 	std::vector<std::shared_ptr<Entity>> m_newEntities;
-	/**
-	 * Add the rendering system and collision system
-	 * */
+	
+	dot::RenderSystem m_renderer;
+
+	// TODO: Collision System
 
 };
 

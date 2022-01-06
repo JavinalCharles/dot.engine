@@ -8,6 +8,7 @@ namespace dot
 {
 class Sprite : public dot::Drawable
 {
+public:
 	Sprite(dot::Entity* owner, unsigned sortOrder = 0u, unsigned drawLayer = 0u);
 
 	/**

@@ -41,6 +41,6 @@ private:
 	std::unordered_map<unsigned int, std::shared_ptr<Scene>> m_scenes;
 	std::shared_ptr<Scene> m_currentScene;
 
-	unsigned int insertedSceneID;
+	unsigned int m_insertedSceneID;
 }; // class SceneManager
 }; // namespace dot

@@ -27,11 +27,13 @@ void Sprite::load(unsigned id)
 {
 	if (id > 0 && id != m_currentTextureID)
 	{
+		// std::cout << "Getting Textures from ID " << id << std::endl; 
 		if (m_owner->context->textures->has(id))
 		{
 			m_currentTextureID = id;
 			std::shared_ptr<sf::Texture> texture = m_owner->context->textures->get(id);
 			m_sprite.setTexture(*texture);
+			// std::cout << "Texture set: " << id << std::endl;
 		}
 	}
 }
