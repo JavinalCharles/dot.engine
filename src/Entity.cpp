@@ -61,3 +61,27 @@ bool Entity::isQueuedForRemoval()
 {
 	return m_queuedForRemoval;
 }
+
+void Entity::onCollisionEnter(std::shared_ptr<dot::BoxCollider>& other)
+{
+	for (const auto& component : m_collidables)
+	{
+		component->onCollisionEnter(other);
+	}
+}
+
+void Entity::onCollisionStay(std::shared_ptr<dot::BoxCollider>& other)
+{
+	for (const auto& component : m_collidables)
+	{
+		component->onCollisionStay(other);
+	}
+}
+
+void Entity::onCollisionExit(std::shared_ptr<dot::BoxCollider>& other)
+{
+	for (const auto& component : m_collidables)
+	{
+		component->onCollisionExit(other);
+	}
+}

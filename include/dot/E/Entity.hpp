@@ -4,6 +4,7 @@
 #include <memory>
 #include "dot/Window.hpp"
 #include "dot/C/Component.hpp"
+#include "dot/C/BoxCollider.hpp"
 #include "dot/C/Transform.hpp"
 #include "dot/C/InstanceID.hpp"
 #include "dot/C/Drawable.hpp"
@@ -55,6 +56,9 @@ public:
 	bool isQueuedForRemoval();
 	void queueForRemoval();
 	
+	void onCollisionEnter(std::shared_ptr<dot::BoxCollider>& other);
+	void onCollisionStay(std::shared_ptr<dot::BoxCollider>& other);
+	void onCollisionExit(std::shared_ptr<dot::BoxCollider>& other);
 
 public: // Public Attributes
 
