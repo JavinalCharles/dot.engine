@@ -35,7 +35,7 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 
 
 	rapidxml::xml_document<> doc;
-	std::cout << "Parsing " << data << std::endl;
+	// std::cout << "Parsing " << data << std::endl;
 	doc.parse<0>(data);
 	xml_node<>* rootNode = doc.first_node("map");
 
@@ -115,7 +115,7 @@ std::shared_ptr<TileSheets> TileMapParser::buildTileSheetData(xml_node<>* rootNo
 		tileSheetData.firstgid = tilesheetNode->first_attribute("firstgid") ? std::atoi(tilesheetNode->first_attribute("firstgid")->value()) : 0;
 
 
-		std::cout << "Reading .tsx file: " << m_resourcesPath << "/" << tilesheetNode->first_attribute("source")->value() << std::endl;
+		// std::cout << "Reading .tsx file: " << m_resourcesPath << "/" << tilesheetNode->first_attribute("source")->value() << std::endl;
 		std::string tsxFile(m_resourcesPath + "/" +tilesheetNode->first_attribute("source")->value());
 		
 		std::ifstream f(tsxFile);
@@ -127,7 +127,7 @@ std::shared_ptr<TileSheets> TileMapParser::buildTileSheetData(xml_node<>* rootNo
 		char data[xmlFile.size()+1];
 
 		strncpy(data, xmlFile.c_str(), xmlFile.size()+1);
-		std::cout << "Read .tsx file: " << data << std::endl;
+		// std::cout << "Read .tsx file: " << data << std::endl;
 		
 		rapidxml::xml_document<> doc;
 		doc.parse<0>(data);
@@ -149,7 +149,7 @@ std::shared_ptr<TileSheets> TileMapParser::buildTileSheetData(xml_node<>* rootNo
 
 std::pair<std::string, std::shared_ptr<MapLayer>> TileMapParser::buildLayer(xml_node<>* layerNode, std::shared_ptr<TileSheets> tileSheets)
 {
-	std::cout << "Making a Map Layer" << std::endl;
+	// std::cout << "Making a Map Layer" << std::endl;
 	TileSet tileset;
 	std::shared_ptr<MapLayer> layer = std::make_shared<MapLayer>();
 
@@ -192,7 +192,7 @@ std::pair<std::string, std::shared_ptr<MapLayer>> TileMapParser::buildLayer(xml_
 						break;
 					}
 				}
-				std::cout << "firstId: " << firstId << std::endl; 
+				// std::cout << "firstId: " << firstId << std::endl; 
 				if (!tileSheet)
 				{
 					continue;
@@ -206,8 +206,8 @@ std::pair<std::string, std::shared_ptr<MapLayer>> TileMapParser::buildLayer(xml_
 					std::cout << "Here!" << std::endl;
 				}
 
-				std::cout << "tileID: " << tileId << " textureX: " << textureX << "; textureY: " << textureY << std::endl;
-				std::cout << "Coords:" << textureX * tileSheet->tilewidth << ", " << textureY * tileSheet->tileheight << std::endl; 
+				// std::cout << "tileID: " << tileId << " textureX: " << textureX << "; textureY: " << textureY << std::endl;
+				// std::cout << "Coords:" << textureX * tileSheet->tilewidth << ", " << textureY * tileSheet->tileheight << std::endl; 
 
 
 				std::shared_ptr<TileInfo> tileInfo = std::make_shared<TileInfo>(tileSheet->textureID, tileId, sf::IntRect(textureX * tileSheet->tilewidth, textureY * tileSheet->tileheight, tileSheet->tilewidth, tileSheet->tilewidth));
@@ -236,7 +236,7 @@ std::pair<std::string, std::shared_ptr<MapLayer>> TileMapParser::buildLayer(xml_
 	}
 	layer->isVisible = layerVisible;
 
-	std::cout << "Created a Map Layer: " << layerName << std::endl;
+	// std::cout << "Created a Map Layer: " << layerName << std::endl;
 
 	return std::make_pair(layerName, layer);
 }

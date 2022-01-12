@@ -5,7 +5,7 @@ using dot::SceneManager;
 SceneManager::SceneManager()
 	: m_scenes(0),
 	m_currentScene(nullptr),
-	m_insertedSceneID(0)
+	m_insertedSceneID(1)
 {
 
 }

@@ -18,9 +18,9 @@ public:
 
 	void unbind(sf::Keyboard::Key key);
 	
-	bool isKeyPressed(unsigned keyCode);
-	bool isKeyDown(unsigned keyCode);
-	bool isKeyUp(unsigned keyCode);
+	bool isCodeActive(unsigned keyCode);
+	bool isCodeDown(unsigned keyCode);
+	bool isCodeUp(unsigned keyCode);
 private:
 	std::unordered_map<sf::Keyboard::Key, unsigned> m_keyBinds;
 

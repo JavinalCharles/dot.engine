@@ -8,7 +8,7 @@ void EntitySystem::update(float deltaTime)
 	{
 		e->update(deltaTime);
 	}
-
+	m_collider.update();
 	m_renderer.update(deltaTime);
 }
 
@@ -33,6 +33,11 @@ void EntitySystem::add(std::shared_ptr<Entity> entity)
 void EntitySystem::add(std::vector<std::shared_ptr<Entity>>& otherEntities)
 {
 	m_newEntities.insert(m_newEntities.end(), otherEntities.begin(), otherEntities.end());
+}
+
+void EntitySystem::addCollisionLayers(unsigned collisionLayer, dot::Bitmask collisionBitmask)
+{
+	m_collider.addCollisionLayers(collisionLayer, collisionBitmask);
 }
 
 void EntitySystem::processNewObjects()
@@ -78,5 +83,6 @@ void EntitySystem::processRemovals()
 	if (removed)
 	{
 		m_renderer.processRemovals();
+		m_collider.processRemovals();
 	}
 }

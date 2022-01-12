@@ -1,4 +1,5 @@
 #include "dot/Events/KeyboardInput.hpp"
+#include <iostream>
 
 using dot::KeyboardInput;
 using dot::Bitmask;
@@ -35,19 +36,19 @@ void KeyboardInput::unbind(sf::Keyboard::Key key)
 	m_keyBinds.erase(key);
 }
 
-bool KeyboardInput::isKeyPressed(unsigned keyCode)
+bool KeyboardInput::isCodeActive(unsigned keyCode)
 {
 	return m_thisFrameKeys.getBit(keyCode);
 }
 
-bool KeyboardInput::isKeyDown(unsigned keyCode)
+bool KeyboardInput::isCodeDown(unsigned keyCode)
 {
 	bool lastFrame = m_lastFrameKeys.getBit(keyCode);
 	bool thisFrame = m_thisFrameKeys.getBit(keyCode);
 	return thisFrame && !lastFrame;
 }
 
-bool KeyboardInput::isKeyUp(unsigned keyCode)
+bool KeyboardInput::isCodeUp(unsigned keyCode)
 {
 	bool lastFrame = m_lastFrameKeys.getBit(keyCode);
 	bool thisFrame = m_thisFrameKeys.getBit(keyCode);

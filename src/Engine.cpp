@@ -25,7 +25,7 @@ void Engine::run()
 
 void Engine::handleInputs()
 {
-
+	m_sceneManager.handleInputs();
 }
 
 void Engine::update()
