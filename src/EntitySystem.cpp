@@ -1,6 +1,16 @@
 #include "dot/S/EntitySystem.hpp"
+#include "dot/Debug/Debug.hpp"
 
 using dot::EntitySystem;
+
+
+EntitySystem::~EntitySystem()
+{
+	Debug::log("EntitySystem::~EntitySystem() entered");
+	m_entities.clear();
+	m_newEntities.clear();
+	Debug::log("EntitySystem::~EntitySystem() exiting");
+}
 
 void EntitySystem::update(float deltaTime)
 {
@@ -56,6 +66,7 @@ void EntitySystem::processNewObjects()
 		m_entities.insert(m_entities.end(), m_newEntities.begin(), m_newEntities.end());
 
 		m_renderer.add(m_newEntities);
+		m_collider.add(m_newEntities);
 
 		m_newEntities.clear();
 	}

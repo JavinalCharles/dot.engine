@@ -5,17 +5,17 @@ std::vector<std::array<sf::Vertex, 2>> Debug::lines = {};
 
 void Debug::render(Window& window)
 {
-	// for (auto& r : rects)
-	// {
-	// 	window.draw(r);
-	// }
-	// rects.clear();
-	// for (auto& l : lines)
-	// {
-	// 	sf::Vertex line[2] = {l.at(0), l.at(1)};
-	// 	window.draw(line, 2, sf::Lines);
-	// }
-	// lines.clear();
+	for (auto& r : rects)
+	{
+		window.render(r);
+	}
+	rects.clear();
+	for (auto& l : lines)
+	{
+		sf::Vertex line[2] = {l.at(0), l.at(1)};
+		window.render(line, 2, sf::Lines);
+	}
+	lines.clear();
 }
 
 

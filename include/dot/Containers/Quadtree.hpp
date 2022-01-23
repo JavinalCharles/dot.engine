@@ -19,6 +19,8 @@ public:
 	Quadtree();
 	Quadtree(int maxObjects, int maxLevels, int level, sf::FloatRect bounds, Quadtree* parent);
 
+	~Quadtree();
+
 	void insert(std::shared_ptr<BoxCollider> object);
 	void remove(std::shared_ptr<BoxCollider> object);
 

@@ -6,7 +6,6 @@
 #include <vector>
 #include "dot/C/Component.hpp"
 #include "dot/Events/KeyboardInput.hpp"
-#include "dot/C/Velocity.hpp"
 
 namespace dot
 {

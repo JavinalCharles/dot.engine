@@ -51,6 +51,11 @@ bool Window::isOpen() const
 	return m_window.isOpen();
 }
 
+void Window::close()
+{
+	m_window.close();
+}
+
 sf::FloatRect Window::getViewSpace() const
 {
 	const sf::View& view = m_window.getView();
@@ -78,4 +83,9 @@ const sf::View& Window::getView() const
 void Window::setView(const sf::View& view)
 {
 	m_window.setView(view);
+}
+
+const sf::RenderWindow& Window::getWindow() const
+{
+	return m_window;
 }

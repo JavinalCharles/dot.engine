@@ -13,6 +13,8 @@ namespace dot
 class EntitySystem
 {
 public:
+
+	~EntitySystem();
 	void add(std::vector<std::shared_ptr<Entity>>& otherEntities);
 	void add(std::shared_ptr<Entity> entity);
 

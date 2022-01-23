@@ -48,13 +48,26 @@ void Sprite::setTextureRect(const sf::IntRect& rect)
 	m_sprite.setTextureRect(rect);
 }
 
+void Sprite::rotate(float angle)
+{
+	m_sprite.rotate(angle);
+}
+
+void Sprite::setRotation(float angle)
+{
+	m_sprite.setRotation(angle);
+}
+
 void Sprite::lateUpdate(float deltaTime)
 {
 	sf::Vector2f pos = m_owner->transform->getPosition();
-	const sf::IntRect& spriteBounds = m_sprite.getTextureRect();
-	const sf::Vector2f& spriteScale = m_sprite.getScale();
+	float rotation = m_owner->transform->getRotation();
+	// const sf::IntRect& spriteBounds = m_sprite.getTextureRect();
+	// const sf::Vector2f& spriteScale = m_sprite.getScale();
 
-	m_sprite.setPosition(pos.x - ((abs(spriteBounds.width) * 0.5f) * spriteScale.x), pos.y - ((abs(spriteBounds.height) * 0.5f) * spriteScale.y));
+	// m_sprite.setPosition(pos.x - ((abs(spriteBounds.width) * 0.5f) * spriteScale.x), pos.y - ((abs(spriteBounds.height) * 0.5f) * spriteScale.y));
+	m_sprite.setPosition(pos);
+	m_sprite.setRotation(rotation);
 }
 
 void Sprite::render(Window& window)
@@ -70,4 +83,34 @@ void Sprite::setScale(float x, float y)
 bool Sprite::continueToDraw() const
 {
 	return !m_owner->isQueuedForRemoval();
+}
+
+void Sprite::setOrigin(float x, float y)
+{
+	m_sprite.setOrigin(x, y);
+}
+
+void Sprite::setOrigin(const sf::Vector2f& factor)
+{
+	m_sprite.setOrigin(factor);
+}
+
+sf::IntRect Sprite::getTextureRect() const
+{
+	return m_sprite.getTextureRect();
+}
+
+sf::FloatRect Sprite::getLocalBounds() const
+{
+	return m_sprite.getLocalBounds();
+}
+
+sf::FloatRect Sprite::getGlobalBounds() const
+{
+	return m_sprite.getGlobalBounds();
+}
+
+sf::Vector2f Sprite::getScale() const
+{
+	return m_sprite.getScale();
 }

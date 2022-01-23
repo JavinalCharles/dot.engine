@@ -27,18 +27,18 @@ public:
 	 * - use to ensure the required components are
 	 * are present
 	 * */
-	void awake();
+	virtual void awake();
 
 	/**
 	 * Entity::start()
 	 * - called after the awake() method. Use to 
 	 * initialize member attributes.
 	 * */
-	void start();
+	virtual void start();
 
-	void update(float deltaTime);
-	void lateUpdate(float deltaTime);
-	void render(Window& window);
+	virtual void update(float deltaTime);
+	virtual void lateUpdate(float deltaTime);
+	virtual void render(Window& window);
 
 	/**
 	 * Entity::addComponent<T>()

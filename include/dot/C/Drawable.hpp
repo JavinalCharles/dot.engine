@@ -22,6 +22,8 @@ public:
 	unsigned getDrawLayer() const;
 
 	virtual bool continueToDraw() const = 0;
+
+	virtual sf::FloatRect getGlobalBounds() const = 0;
 protected:
 	unsigned m_sortOrder;
 

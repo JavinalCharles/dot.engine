@@ -3,6 +3,7 @@
 #include "dot/C/Drawable.hpp"
 #include "dot/C/Transform.hpp"
 #include "dot/ResourceAllocator.hpp"
+#include "dot/C/BoxCollider.hpp"
 
 namespace dot
 {
@@ -31,6 +32,17 @@ public:
 	void setTextureRect(int x, int y, int width, int height);
 	void setTextureRect(const sf::IntRect& rect);
 	void setScale(float x, float y);
+
+	void rotate(float angle);
+	void setRotation(float angle);
+
+	void setOrigin(float x, float y);
+	void setOrigin(const sf::Vector2f& factors);
+
+	sf::IntRect getTextureRect() const;
+	sf::FloatRect getLocalBounds() const;
+	sf::FloatRect getGlobalBounds() const override;
+	sf::Vector2f getScale() const;
 
 	virtual bool continueToDraw() const override;
 private:

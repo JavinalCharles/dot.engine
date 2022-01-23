@@ -37,6 +37,8 @@ public:
 	void setAnimationDirection(CardinalDirection dir);
 
 	void addAnimationAction(unsigned state, CardinalDirection dir, unsigned frame, AnimationAction action);
+
+	void setDirectionalAnimations(bool allowDirectionalAnimation);
 private:
 	std::shared_ptr<Sprite> m_sprite;
 	std::unordered_map<unsigned, AnimationList, EnumClassHash> m_animations;
@@ -44,6 +46,8 @@ private:
 	CardinalDirection m_currentDirection;
 
 	std::shared_ptr<dot::Direction> m_direction;
+
+	bool m_allowDirectionalAnimations;
 }; // class ANimationComponent
 
 }; // namespace dot

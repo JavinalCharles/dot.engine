@@ -56,7 +56,7 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 
 			std::shared_ptr<Entity> tileObject = std::make_shared<Entity>(&m_context);
 
-			const unsigned int tileScale = 2;
+			const unsigned int tileScale = 4;
 
 			if (layer.second->isVisible)
 			{
@@ -65,19 +65,29 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 				sprite->load(tileInfo->textureID);
 				sprite->setTextureRect(tileInfo->textureRect);
 				sprite->setScale(tileScale, tileScale);
+				sprite->setOrigin(tilewidth/2, tileheight/2);
 
 				sprite->setSortOrder(layerCount);
 				sprite->setDrawLayer(1);
 			}
 
-			float x = tile->x * tilewidth * tileScale + offset.x;
-			float y = tile->y * tileheight * tileScale + offset.y;
+			float x = tile->x * tilewidth * tileScale;
+			float y = tile->y * tileheight * tileScale;
 			tileObject->transform->setPosition(x, y);
 			tileObject->transform->setStatic(true);
 
 			if (layer.first == "Collisions")
 			{
-				// TODO: Define tile-entity collision behaviour
+				// std::cout << "Collisions here" << std::endl;
+				auto collider = tileObject->addComponent<dot::BoxCollider>();
+				float left = x - (tilewidth * tileScale);
+				float top = y - (tileheight * tileScale);
+
+				float width = tilewidth * tileScale;
+				float height = tileheight * tileScale;
+
+				collider->setCollidable(sf::FloatRect(left, top, width, height));
+				collider->setLayer(1);
 			}
 			tileObjects.emplace_back(tileObject);
 		}
@@ -96,7 +106,7 @@ std::shared_ptr<MapTiles> TileMapParser::buildMapTiles(xml_node<>* rootNode)
 
 	std::shared_ptr<MapTiles> map = std::make_shared<MapTiles>();
 
-	for (xml_node<>* node = rootNode->last_node("layer"); node; node = node->previous_sibling("layer"))
+	for (xml_node<>* node = rootNode->first_node("layer"); node; node = node->next_sibling("layer"))
 	{
 		std::pair<std::string, std::shared_ptr<MapLayer>> mapLayer = buildLayer(node, tileSheetData);
 		map->emplace_back(mapLayer);
@@ -236,7 +246,7 @@ std::pair<std::string, std::shared_ptr<MapLayer>> TileMapParser::buildLayer(xml_
 	}
 	layer->isVisible = layerVisible;
 
-	// std::cout << "Created a Map Layer: " << layerName << std::endl;
+	std::cout << "Created a Map Layer: " << layerName << std::endl;
 
 	return std::make_pair(layerName, layer);
 }

@@ -13,7 +13,8 @@ enum class CardinalDirection : unsigned int
 	WEST,
 	EAST,
 	NORTH,
-	SOUTH
+	SOUTH,
+	N_A
 };
 
 

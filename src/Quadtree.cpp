@@ -1,4 +1,5 @@
 #include "dot/Containers/Quadtree.hpp"
+#include "dot/Debug/Debug.hpp"
 
 using dot::Quadtree;
 
@@ -16,6 +17,13 @@ Quadtree::Quadtree(int maxObjects, int maxLevels, int level, sf::FloatRect bound
 	parent(parent)
 {
 
+}
+
+Quadtree::~Quadtree()
+{
+	// Debug::log("Quadtree::~Quadtree() initialized");
+	this->clear();
+	// Debug::log("Quadtree::~Quadtree() exiting");
 }
 
 

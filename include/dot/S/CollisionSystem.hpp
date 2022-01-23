@@ -21,6 +21,8 @@ class CollisionSystem
 public:
 	CollisionSystem();
 
+	~CollisionSystem();
+
 	void add(std::vector<std::shared_ptr<dot::Entity>>& entities);
 
 	void addCollisionLayers(unsigned collisionLayer, dot::Bitmask collisionBitmask);

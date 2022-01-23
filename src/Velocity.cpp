@@ -12,7 +12,7 @@ Velocity::Velocity(dot::Entity* owner)
 
 void Velocity::update(float deltaTime)
 {
-	clampVelocity();
+
 
 	m_owner->transform->addPosition(m_velocity * deltaTime);
 }
@@ -26,24 +26,26 @@ void Velocity::lateUpdate(float deltaTime)
 void Velocity::set(const sf::Vector2f& vel)
 {
 	m_velocity = vel;
+	clampVelocity();
 }
 
 void Velocity::set(float x, float y)
 {
 	m_velocity.x = x;
 	m_velocity.y = y;
-
+	clampVelocity();
 }
 
 void Velocity::setX(float x)
 {
 	m_velocity.x = x;
+	clampVelocity();
 }
 
 void Velocity::setY(float y)
 {
-
 	m_velocity.y = y;
+	clampVelocity();
 }
 
 const sf::Vector2f& Velocity::get() const

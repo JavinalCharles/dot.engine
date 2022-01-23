@@ -8,7 +8,7 @@ using dot::AnimationComponent;
 AnimationComponent::AnimationComponent(Entity* owner)
 	: Component(owner),
 	m_currentAnimation(0, nullptr),
-	m_currentDirection(CardinalDirection::SOUTH)
+	m_currentDirection(CardinalDirection::NONE)
 {
 
 }
@@ -21,7 +21,8 @@ void AnimationComponent::awake()
 
 void AnimationComponent::update(float deltaTime)
 {
-	setAnimationDirection(m_direction->get());
+	if (m_allowDirectionalAnimations)
+		setAnimationDirection(m_direction->get());
 
 	if (m_currentAnimation.first != 0)
 	{
@@ -41,7 +42,7 @@ void AnimationComponent::addAnimation(unsigned state, AnimationList& animationLi
 	// std::cout << "Entered AnimationComponent::addAnimation() " << state << std::endl;
 	if (m_currentAnimation.first == 0)
 	{
-		// std::cout << "Setting AnimationState to: " << state << std::endl;
+		std::cout << "Setting AnimationState to: " << state << std::endl;
 		setAnimationState(state);
 	}
 	// std::cout << "Exiting AnimationComponent::addAnimation()" << std::endl;
@@ -115,5 +116,14 @@ void AnimationComponent::addAnimationAction(unsigned state, CardinalDirection di
 		{
 			animation->second->addFrameAction(frame, action);
 		}
+	}
+}
+
+void AnimationComponent::setDirectionalAnimations(bool allowDirectionalAnimation)
+{
+	m_allowDirectionalAnimations = allowDirectionalAnimation;
+	if (!m_allowDirectionalAnimations)
+	{
+		setAnimationDirection(CardinalDirection::N_A);
 	}
 }

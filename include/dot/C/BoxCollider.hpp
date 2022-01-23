@@ -3,6 +3,8 @@
 #include "dot/C/Component.hpp"
 #include "dot/C/Collider.hpp"
 
+#include "dot/Debug/Debug.hpp"
+
 using dot::Collider;
 using dot::Manifold;
 

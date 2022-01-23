@@ -27,6 +27,10 @@ public:
 	const sf::View& getView() const;
 	void setView(const sf::View& view);
 
+	const sf::RenderWindow& getWindow() const;
+
+	void close();
+
 private:
 	sf::RenderWindow m_window;
 

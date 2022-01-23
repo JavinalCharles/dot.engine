@@ -1,10 +1,21 @@
 #include "dot/S/RenderSystem.hpp"
 #include <iostream>
+#include "dot/Debug/Debug.hpp"
+
+
+#include "dot/Debug/Debug.hpp"
 
 using dot::RenderSystem;
 using dot::Entity;
 using dot::Drawable;
 using dot::Window;
+
+RenderSystem::~RenderSystem()
+{
+	Debug::log("RenderSystem::~RenderSystem() entered");
+	m_drawables.clear();
+	Debug::log("RenderSystem::~RenderSystem() exiting");
+}
 
 void RenderSystem::add(std::vector<std::shared_ptr<Entity>>& entities)
 {
@@ -57,12 +68,18 @@ void RenderSystem::update(float deltaTime)
 
 void RenderSystem::render(Window& window)
 {
+	sf::FloatRect rect = window.getViewSpace();
+	Debug::renderRect(rect, sf::Color::Yellow);
+
 	for(auto& layer : m_drawables)
 	{
 		// std::cout << "Rendering " << layer.second.size() << " entities" << std::endl;
 		for (auto& drawable : layer.second)
 		{
-			drawable->render(window);
+			if (rect.intersects(drawable->getGlobalBounds()))
+			{
+				drawable->render(window);
+			}
 		}
 	}
 }

@@ -15,6 +15,7 @@ class Engine
 {
 public:
 	Engine();
+	Engine(sf::VideoMode mode, const std::string& title);
 
 	void run();
 

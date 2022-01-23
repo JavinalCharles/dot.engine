@@ -1,11 +1,23 @@
 #include "dot/S/CollisionSystem.hpp"
+#include "dot/Debug/Debug.hpp"
+
 
 using dot::CollisionSystem;
 
 CollisionSystem::CollisionSystem()
-	: m_collisionTree(5, 5, 0, {0, 0, 4200, 2048}, nullptr)
+	: m_collisionTree(10, 15, 0, {0, 0, 4200, 2048}, nullptr)
 {
 
+}
+
+CollisionSystem::~CollisionSystem()
+{
+	Debug::log("CollisionSystem::~CollisionSystem() entered");
+	m_collisionTree.clear();
+	m_objectsColliding.clear();
+	m_collidables.clear();
+	m_collisionLayers.clear();
+	Debug::log("CollisionSystem::~CollisionSystem() exiting");
 }
 
 void CollisionSystem::addCollisionLayers(unsigned collisionLayer, dot::Bitmask collisionBitmask)
@@ -20,15 +32,23 @@ void CollisionSystem::add(std::vector<std::shared_ptr<dot::Entity>>& entities)
 		auto collider = e->getComponent<dot::BoxCollider>();
 		if(collider)
 		{
-			unsigned layer = collider->getLayer();
-			auto itr = m_collidables.find(layer);
-			if(itr != m_collidables.end())
+			if (collider->getOwner()->transform->isStatic())
 			{
-				m_collidables[layer].push_back(collider);
+				m_collisionTree.insert(collider);
 			}
 			else
 			{
-				m_collidables.insert(std::make_pair(layer, std::vector<std::shared_ptr<dot::BoxCollider>>{collider}));
+				unsigned layer = collider->getLayer();
+				auto itr = m_collidables.find(layer);
+
+				if(itr != m_collidables.end())
+				{
+					m_collidables[layer].push_back(collider);
+				}
+				else
+				{
+					m_collidables.insert(std::make_pair(layer, std::vector<std::shared_ptr<dot::BoxCollider>>{collider}));
+				}
 			}
 		}
 	}
@@ -70,18 +90,18 @@ void CollisionSystem::processRemovals()
 
 void CollisionSystem::update()
 {
-	m_collisionTree.drawDebug();
+	// m_collisionTree.drawDebug();
 	processCollidingEntities();
 
-	m_collisionTree.clear();
+	// m_collisionTree.clear();
 
-	for (auto maps = m_collidables.begin(); maps != m_collidables.end(); ++maps)
-	{
-		for (auto collidable : maps->second)
-		{
-			m_collisionTree.insert(collidable);
-		}
-	}
+	// for (auto maps = m_collidables.begin(); maps != m_collidables.end(); ++maps)
+	// {
+	// 	for (auto collidable : maps->second)
+	// 	{
+	// 		m_collisionTree.insert(collidable);
+	// 	}
+	// }
 
 	resolve();
 }
@@ -177,6 +197,7 @@ void CollisionSystem::processCollidingEntities()
 			{
 				first->getOwner()->onCollisionStay(second);
 				second->getOwner()->onCollisionStay(first);
+				++itr;
 			}
 		}
 	}

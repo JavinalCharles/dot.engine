@@ -15,6 +15,8 @@ namespace dot
 class RenderSystem
 {
 public:
+	~RenderSystem();
+
 	void add(std::vector<std::shared_ptr<Entity>>& entities);
 	void add(std::shared_ptr<Entity> entity);
 	void processRemovals();
