@@ -23,11 +23,11 @@ public:
 	BoxCollider(dot::Entity* owner);
 	virtual ~BoxCollider();
 
-	virtual Manifold intersects(std::shared_ptr<Collider> other) override;
+	// virtual Manifold intersects(std::shared_ptr<Collider> other) override;
 	virtual void resolveOverlap(const Manifold& m) override;
 
-	void setCollidable(const sf::FloatRect& rect);
-	const sf::FloatRect& getCollidable();
+	virtual void setCollidable(const sf::FloatRect& rect) override;
+	virtual sf::FloatRect getCollidable() override;
 
 	void setOrigin(const Origin& origin);
 

@@ -90,7 +90,7 @@ bool Transform::isStatic() const
 	return m_isStaticTransform;
 }
 
-sf::Vector2f Transform::getPosition() const
+const sf::Vector2f& Transform::getPosition() const
 {
 	return m_position;
 }

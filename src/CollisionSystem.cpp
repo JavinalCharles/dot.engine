@@ -5,7 +5,7 @@
 using dot::CollisionSystem;
 
 CollisionSystem::CollisionSystem()
-	: m_collisionTree(10, 15, 0, {0, 0, 4200, 2048}, nullptr)
+	: m_collisionTree(10, 10, 0, {0, 0, 4200, 2048}, nullptr)
 {
 
 }
@@ -27,28 +27,21 @@ void CollisionSystem::addCollisionLayers(unsigned collisionLayer, dot::Bitmask c
 
 void CollisionSystem::add(std::vector<std::shared_ptr<dot::Entity>>& entities)
 {
+	// Debug::log("Adding " + std::to_tring(entities.size()) + " colliders to the collision system");
 	for (auto& e : entities)
 	{
-		auto collider = e->getComponent<dot::BoxCollider>();
-		if(collider)
+		auto collider = e->getComponent<dot::Collider>();
+		if(collider != nullptr)
 		{
-			if (collider->getOwner()->transform->isStatic())
-			{
-				m_collisionTree.insert(collider);
-			}
-			else
-			{
-				unsigned layer = collider->getLayer();
-				auto itr = m_collidables.find(layer);
+			// unsigned layer = collider->getLayer();
 
-				if(itr != m_collidables.end())
-				{
-					m_collidables[layer].push_back(collider);
-				}
-				else
-				{
-					m_collidables.insert(std::make_pair(layer, std::vector<std::shared_ptr<dot::BoxCollider>>{collider}));
-				}
+			// auto itr = m_collidables.find(layer);
+
+			m_collisionTree.insert(collider);
+
+			if (!collider->getOwner()->transform->isStatic())
+			{
+				m_nonStatics.push_back(collider);
 			}
 		}
 	}
@@ -56,40 +49,48 @@ void CollisionSystem::add(std::vector<std::shared_ptr<dot::Entity>>& entities)
 
 void CollisionSystem::processRemovals()
 {
-	for(auto& layer : m_collidables)
+	m_collisionTree.clearRemovedObjects();
+	auto iter = m_nonStatics.begin();
+	while(iter != m_nonStatics.end())
 	{
-		auto itr = layer.second.begin();
-		while(itr != layer.second.end())
+		auto obj = *iter;
+		if(obj->getOwner()->isQueuedForRemoval())
 		{
-			if ((*itr)->getOwner()->isQueuedForRemoval())
+			unsigned long long id = obj->getOwner()->instanceID->get();
+			auto jtr = m_objectsColliding.begin();
+			while(jtr != m_objectsColliding.end())
 			{
-				auto id = (*itr)->getOwner()->instanceID->get();
-				auto jtr = m_objectsColliding.begin();
-				while (jtr != m_objectsColliding.end())
+				auto pair = *jtr;
+				if (pair.first->getOwner()->instanceID->get() == id || pair.second->getOwner()->instanceID->get() == id)
 				{
-					auto pair = *jtr;
-					if(pair.first->getOwner()->instanceID->get() == id || pair.second->getOwner()->instanceID->get() == id)
-					{
-						jtr = m_objectsColliding.erase(jtr);
-					}
-					else 
-					{
-						++jtr;
-					}
+					jtr = m_objectsColliding.erase(jtr);
 				}
+				else
+				{
+					++jtr;
+				}
+			}
 
-				itr = layer.second.erase(itr);
-			}
-			else
-			{
-				++itr;
-			}
+			iter = m_nonStatics.erase(iter);
 		}
+		else
+		{
+			++iter;
+		}
+	}
+}
+
+void CollisionSystem::updatePositions()
+{
+	for (auto& c : m_nonStatics)
+	{
+		c->updateTree();
 	}
 }
 
 void CollisionSystem::update()
 {
+	updatePositions();
 	// m_collisionTree.drawDebug();
 	processCollidingEntities();
 
@@ -108,59 +109,49 @@ void CollisionSystem::update()
 
 void CollisionSystem::resolve()
 {
-	for (auto maps = m_collidables.begin(); maps != m_collidables.end(); ++maps)
+	for (auto& collider : m_nonStatics)
 	{
-		if(m_collisionLayers[maps->first].getMask() == 0)
+		if (m_collisionLayers[collider->getLayer()].getMask() == 0)
 		{
 			continue;
 		}
-		for(auto collidable : maps->second)
+
+		std::vector<std::shared_ptr<dot::Collider>> collisions = m_collisionTree.search(collider->getCollidable());
+
+		for (auto& collision : collisions)
 		{
-			// If this collidable is static then no need to check
-			// if it's colliding with other objects
-			if(collidable->getOwner()->transform->isStatic())
+			if (collider->getOwner()->instanceID->get() == collision->getOwner()->instanceID->get())
 			{
 				continue;
 			}
 
-			std::vector<std::shared_ptr<dot::BoxCollider>> collisions = m_collisionTree.search(collidable->getCollidable());
-			for (auto collision : collisions)
+			bool layersCollide = m_collisionLayers[collider->getLayer()].getBit(static_cast<int>(collision->getLayer()));
+			if (layersCollide)
 			{
-				// Make sure we do not resolve collisions between the same object
-				if (collidable->getOwner()->instanceID->get() == collision->getOwner()->instanceID->get())
-				{
-					continue;
-				}
+				Manifold m = collider->intersects(collision);
 
-				bool layersCollide = m_collisionLayers[collidable->getLayer()].getBit(((int)collision->getLayer()));
-
-				if(layersCollide)
+				if (m.colliding)
 				{
-					Manifold m = collidable->intersects(collision);
-					if(m.colliding)
+					auto collisionPair = m_objectsColliding.emplace(std::make_pair(collider, collision));
+
+					if (collisionPair.second)
 					{
-						
-						auto collisionPair = m_objectsColliding.emplace(std::make_pair(collidable, collision));
-						if (collisionPair.second)
-						{
-							collidable->getOwner()->onCollisionEnter(collision);
-							collision->getOwner()->onCollisionEnter(collidable);
+						collider->getOwner()->onCollisionEnter(collision);
+						collision->getOwner()->onCollisionEnter(collider);
+					}
 
-						}
+					Debug::renderRect(collision->getCollidable(), sf::Color::Red);
+					Debug::renderRect(collider->getCollidable(), sf::Color::Red);
 
-						Debug::renderRect(collision->getCollidable(), sf::Color::Red);
-						Debug::renderRect(collidable->getCollidable(), sf::Color::Red);
-
-						if (collision->getOwner()->transform->isStatic())
-						{
-							collidable->resolveOverlap(m);
-						}
-						else
-						{
-							// TODO: how shall we handle collision when both objects are not static?
-							// We could implement rigidbodies and mass
-							collidable->resolveOverlap(m);
-						}
+					if(collision->getOwner()->transform->isStatic())
+					{
+						collider->resolveOverlap(m);
+					}
+					else
+					{
+						// TODO: Haw shall we handle collisions when bot objects are not static?
+						// Possibility: RigidBodies and Mass
+						collider->resolveOverlap(m);
 					}
 				}
 			}
@@ -174,8 +165,8 @@ void CollisionSystem::processCollidingEntities()
 	while(itr != m_objectsColliding.end())
 	{
 		auto pair = *itr;
-		std::shared_ptr<dot::BoxCollider> first = pair.first;
-		std::shared_ptr<dot::BoxCollider> second = pair.second;
+		std::shared_ptr<dot::Collider> first = pair.first;
+		std::shared_ptr<dot::Collider> second = pair.second;
 
 		if (first->getOwner()->isQueuedForRemoval() || second->getOwner()->isQueuedForRemoval())
 		{

@@ -16,7 +16,7 @@ public:
 	void setPosition(const sf::Vector2f& pos);
 	void addPosition(float x, float y);
 	void addPosition(sf::Vector2f pos);
-	sf::Vector2f getPosition() const;
+	const sf::Vector2f& getPosition() const;
 
 	void setX(float x);
 	void setY(float y);

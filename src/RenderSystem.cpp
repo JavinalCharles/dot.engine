@@ -63,7 +63,7 @@ void RenderSystem::sort()
 
 void RenderSystem::update(float deltaTime)
 {
-	// this->sort();
+	this->sort();
 }
 
 void RenderSystem::render(Window& window)

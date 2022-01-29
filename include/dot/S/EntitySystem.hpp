@@ -36,8 +36,6 @@ private:
 	dot::RenderSystem m_renderer;
 	dot::CollisionSystem m_collider;
 
-	// TODO: Collision System
-
 }; // class EntitySystem
 
 }; // namespace Sigma

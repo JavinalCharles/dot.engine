@@ -12,6 +12,12 @@ Sprite::Sprite(Entity* owner, unsigned sortOrder, unsigned drawLayer)
 
 }
 
+void Sprite::awake()
+{
+	m_sprite.setPosition(m_owner->transform->getPosition());
+	m_sprite.setRotation(m_owner->transform->getRotation());
+}
+
 void Sprite::load(const std::string& filePath)
 {
 	unsigned textureID = m_owner->context->textures->add(filePath);

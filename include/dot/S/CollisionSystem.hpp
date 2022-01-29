@@ -8,8 +8,8 @@
 #include <cstdarg>
 
 #include "dot/E/Entity.hpp"
-#include "dot/C/BoxCollider.hpp"
-#include "dot/Containers/Quadtree.hpp"
+#include "dot/C/Collider.hpp"
+#include "dot/Containers/CollisionTree.hpp"
 #include "dot/Utilities/Bitmask.hpp"
 #include "dot/Utilities/EnumClassHash.hpp"
 #include "dot/Utilities/ComponentPairHash.hpp"
@@ -24,23 +24,28 @@ public:
 	~CollisionSystem();
 
 	void add(std::vector<std::shared_ptr<dot::Entity>>& entities);
+	void processRemovals();
 
 	void addCollisionLayers(unsigned collisionLayer, dot::Bitmask collisionBitmask);
 
-	void processRemovals();
+	void updatePositions();
+
+
+	void resolve();
 	void update();
 
 private:
-	void resolve();
 	void processCollidingEntities();
 
 	std::unordered_map<unsigned, dot::Bitmask, dot::EnumClassHash> m_collisionLayers;
 	
-	std::unordered_map<unsigned, std::vector<std::shared_ptr<dot::BoxCollider>>, EnumClassHash> m_collidables;
+	std::unordered_map<unsigned, std::vector<std::shared_ptr<dot::Collider>>, EnumClassHash> m_collidables;
 
-	std::unordered_set<std::pair<std::shared_ptr<dot::BoxCollider>, std::shared_ptr<dot::BoxCollider>>, dot::ComponentPairHash> m_objectsColliding;
+	std::vector<std::shared_ptr<dot::Collider>> m_nonStatics;
 
-	dot::Quadtree m_collisionTree;
+	std::unordered_set<std::pair<std::shared_ptr<dot::Collider>, std::shared_ptr<dot::Collider>>, dot::ComponentPairHash> m_objectsColliding;
+
+	dot::CollisionTree m_collisionTree;
 
 }; // class CollisionSystem
 }; // namespace dot

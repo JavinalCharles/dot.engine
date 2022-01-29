@@ -33,7 +33,6 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 	char data[xmlFile.size()+1];
 	strncpy(data, xmlFile.c_str(), xmlFile.size()+1);
 
-
 	rapidxml::xml_document<> doc;
 	// std::cout << "Parsing " << data << std::endl;
 	doc.parse<0>(data);
@@ -47,6 +46,8 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 
 	std::vector<std::shared_ptr<Entity>> tileObjects;
 	unsigned int layerCount = map->size() - 1;
+	unsigned sortOrder = 1;
+
 
 	for (const auto& layer : *map)
 	{
@@ -67,7 +68,7 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 				sprite->setScale(tileScale, tileScale);
 				sprite->setOrigin(tilewidth/2, tileheight/2);
 
-				sprite->setSortOrder(layerCount);
+				sprite->setSortOrder(sortOrder);
 				sprite->setDrawLayer(1);
 			}
 
@@ -92,6 +93,7 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 			tileObjects.emplace_back(tileObject);
 		}
 		--layerCount;
+		++sortOrder;
 	}
 
 	std::cout << "Parser returning with " << tileObjects.size() << " objects." << std::endl;
@@ -247,6 +249,7 @@ std::pair<std::string, std::shared_ptr<MapLayer>> TileMapParser::buildLayer(xml_
 	layer->isVisible = layerVisible;
 
 	std::cout << "Created a Map Layer: " << layerName << std::endl;
+	std::cout << "Object count: " << layer->tiles.size() << std::endl; 
 
 	return std::make_pair(layerName, layer);
 }

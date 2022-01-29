@@ -24,6 +24,7 @@ public:
 	 * */
 	void load(unsigned id);
 
+	virtual void awake() override;
 
 	virtual void lateUpdate(float deltaTime) override;
 

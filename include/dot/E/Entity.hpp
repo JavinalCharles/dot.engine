@@ -56,9 +56,9 @@ public:
 	bool isQueuedForRemoval();
 	void queueForRemoval();
 	
-	void onCollisionEnter(std::shared_ptr<dot::BoxCollider>& other);
-	void onCollisionStay(std::shared_ptr<dot::BoxCollider>& other);
-	void onCollisionExit(std::shared_ptr<dot::BoxCollider>& other);
+	void onCollisionEnter(std::shared_ptr<dot::Collider>& other);
+	void onCollisionStay(std::shared_ptr<dot::Collider>& other);
+	void onCollisionExit(std::shared_ptr<dot::Collider>& other);
 
 public: // Public Attributes
 
@@ -104,6 +104,11 @@ std::shared_ptr<T> Entity::addComponent()
 		m_drawable = std::dynamic_pointer_cast<dot::Drawable>(newComponent);
 	}
 
+	if (std::dynamic_pointer_cast<dot::Collidable>(newComponent))
+	{
+		m_collidables.push_back(std::dynamic_pointer_cast<dot::Collidable>(newComponent));
+	}
+
 	return newComponent;
 }
 
@@ -117,6 +122,8 @@ std::shared_ptr<T> Entity::getComponent()
 			return std::dynamic_pointer_cast<T>(existingComponent);
 		}
 	}
+
+	return nullptr;
 }
 
 }; // namespace dot

@@ -2,6 +2,8 @@
 #include "dot/E/Entity.hpp"
 #include <cmath>
 
+#include "dot/Debug/Debug.hpp"
+
 using std::fabs;
 using dot::BoxCollider;
 using dot::Collider;
@@ -27,8 +29,9 @@ void BoxCollider::setCollidable(const sf::FloatRect& rect)
 	setPosition();
 }
 
-const sf::FloatRect& BoxCollider::getCollidable()
+sf::FloatRect BoxCollider::getCollidable()
 {
+	// Debug::log("getting collidable.");
 	setPosition();
 	return m_AABB;
 }
@@ -40,7 +43,8 @@ void BoxCollider::setOrigin(const Origin& origin)
 
 void BoxCollider::setPosition()
 {
-	const sf::Vector2f& pos = m_owner->transform->getPosition();
+	// Debug::log("BoxCollider::setPosition() - getting pos of : " + std::to_string(m_owner->instanceID->get()));
+	sf::Vector2f pos = m_owner->transform->getPosition();
 
 	switch(m_origin)
 	{
@@ -59,25 +63,25 @@ void BoxCollider::setPosition()
 	}
 }
 
-Manifold BoxCollider::intersects(std::shared_ptr<Collider> other)
-{
-	Manifold m;
-	m.colliding = false;
+// Manifold BoxCollider::intersects(std::shared_ptr<Collider> other)
+// {
+// 	Manifold m;
+// 	m.colliding = false;
 
-	std::shared_ptr<BoxCollider> boxCollider = std::dynamic_pointer_cast<BoxCollider>(other);
-	if (boxCollider)
-	{
-		const sf::FloatRect& rect1 = getCollidable();
-		const sf::FloatRect& rect2 = boxCollider->getCollidable();
+// 	std::shared_ptr<BoxCollider> boxCollider = std::dynamic_pointer_cast<BoxCollider>(other);
+// 	if (boxCollider)
+// 	{
+// 		const sf::FloatRect& rect1 = getCollidable();
+// 		const sf::FloatRect& rect2 = boxCollider->getCollidable();
 
-		if (rect1.intersects(rect2))
-		{
-			m.colliding = true;
-			m.other = &rect2;
-		}
-	}
-	return m;
-}
+// 		if (rect1.intersects(rect2))
+// 		{
+// 			m.colliding = true;
+// 			m.other = rect2;
+// 		}
+// 	}
+// 	return m;
+// }
 
 void BoxCollider::resolveOverlap(const Manifold& m)
 {
@@ -88,26 +92,26 @@ void BoxCollider::resolveOverlap(const Manifold& m)
 	}
 
 	const sf::FloatRect& rect1 = getCollidable();
-	const sf::FloatRect* rect2 = m.other;
+	const sf::FloatRect rect2 = m.other;
 
-	if (!rect1.intersects(*rect2))
+	if (!rect1.intersects(rect2))
 	{
 		return;
 	}
 
 	float resolve = 0;
-	float xDiff = (rect1.left + (rect1.width * 0.5f)) - (rect2->left + (rect2->width * 0.5f));
-	float yDiff = (rect1.top + (rect1.height * 0.5f)) - (rect2->top + (rect2->height * 0.5f));
+	float xDiff = (rect1.left + (rect1.width * 0.5f)) - (rect2.left + (rect2.width * 0.5f));
+	float yDiff = (rect1.top + (rect1.height * 0.5f)) - (rect2.top + (rect2.height * 0.5f));
 
 	if (fabs(xDiff) > fabs(yDiff))
 	{
 		if (xDiff > 0)
 		{
-			resolve = (rect2->left + rect2->width) - rect1.left;
+			resolve = (rect2.left + rect2.width) - rect1.left;
 		}
 		else
 		{
-			resolve = -((rect1.left + rect1.width) - rect2->left);
+			resolve = -((rect1.left + rect1.width) - rect2.left);
 		}
 		transform->addPosition(resolve, 0);
 	}
@@ -115,11 +119,11 @@ void BoxCollider::resolveOverlap(const Manifold& m)
 	{
 		if (yDiff > 0) // Colliding above
 		{
-			resolve = (rect2->top + rect2->height) - rect1.top;
+			resolve = (rect2.top + rect2.height) - rect1.top;
 		}
 		else
 		{
-			resolve = -((rect1.top + rect1.height) - rect2->top);
+			resolve = -((rect1.top + rect1.height) - rect2.top);
 		}
 		transform->addPosition(0, resolve);
 	}
