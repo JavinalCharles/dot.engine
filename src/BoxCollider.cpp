@@ -36,6 +36,12 @@ sf::FloatRect BoxCollider::getCollidable()
 	return m_AABB;
 }
 
+sf::FloatRect BoxCollider::getBounds()
+{
+	setPosition();
+	return m_AABB;
+}
+
 void BoxCollider::setOrigin(const Origin& origin)
 {
 	this->m_origin = origin;

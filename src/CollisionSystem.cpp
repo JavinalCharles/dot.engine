@@ -5,19 +5,18 @@
 using dot::CollisionSystem;
 
 CollisionSystem::CollisionSystem()
-	: m_collisionTree(10, 10, 0, {0, 0, 4200, 2048}, nullptr)
+	: m_collisionTree(10, 10, 0, {0, 0, 4200, 4200}, nullptr)
 {
 
 }
 
 CollisionSystem::~CollisionSystem()
 {
-	Debug::log("CollisionSystem::~CollisionSystem() entered");
+	// Debug::log("CollisionSystem::~CollisionSystem() entered");
 	m_collisionTree.clear();
 	m_objectsColliding.clear();
-	m_collidables.clear();
 	m_collisionLayers.clear();
-	Debug::log("CollisionSystem::~CollisionSystem() exiting");
+	// Debug::log("CollisionSystem::~CollisionSystem() exiting");
 }
 
 void CollisionSystem::addCollisionLayers(unsigned collisionLayer, dot::Bitmask collisionBitmask)

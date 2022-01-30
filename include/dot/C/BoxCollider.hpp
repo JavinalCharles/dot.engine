@@ -28,6 +28,7 @@ public:
 
 	virtual void setCollidable(const sf::FloatRect& rect) override;
 	virtual sf::FloatRect getCollidable() override;
+	virtual sf::FloatRect getBounds() override;
 
 	void setOrigin(const Origin& origin);
 

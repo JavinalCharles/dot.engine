@@ -10,6 +10,7 @@
 #include "dot/C/Sprite.hpp"
 #include "dot/Utilities/WorkingDirectory.hpp"
 #include "dot/C/BoxCollider.hpp"
+#include "dot/C/SpriteBoxCollider.hpp"
 #include "dot/Utilities/Utils.hpp"
 
 using namespace rapidxml;

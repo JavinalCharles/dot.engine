@@ -9,7 +9,7 @@
 
 #include "dot/E/Entity.hpp"
 #include "dot/C/Collider.hpp"
-#include "dot/Containers/CollisionTree.hpp"
+#include "dot/Containers/Quadtree.hpp"
 #include "dot/Utilities/Bitmask.hpp"
 #include "dot/Utilities/EnumClassHash.hpp"
 #include "dot/Utilities/ComponentPairHash.hpp"
@@ -38,8 +38,6 @@ private:
 	void processCollidingEntities();
 
 	std::unordered_map<unsigned, dot::Bitmask, dot::EnumClassHash> m_collisionLayers;
-	
-	std::unordered_map<unsigned, std::vector<std::shared_ptr<dot::Collider>>, EnumClassHash> m_collidables;
 
 	std::vector<std::shared_ptr<dot::Collider>> m_nonStatics;
 

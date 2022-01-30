@@ -1,5 +1,5 @@
 #include "dot/C/Collider.hpp"
-#include "dot/Containers/CollisionTree.hpp"
+#include "dot/Containers/Quadtree.hpp"
 
 
 using dot::Collider;
@@ -45,7 +45,7 @@ void Collider::setLayer(unsigned layer)
 	m_layer = layer;
 }
 
-void Collider::setCollisionTree(dot::CollisionTree* tree)
+void Collider::setTree(dot::Quadtree<Collider>* tree)
 {
 	m_containingTree = tree;
 }
@@ -54,6 +54,9 @@ void Collider::updateTree()
 {
 	if (m_containingTree != nullptr)
 	{
-		m_containingTree->updatePosition(shared_from_this());
+		if (m_containingTree->getBounds().intersects(this->getBounds()))
+		{
+			m_containingTree->updatePosition(shared_from_this());
+		}
 	}
 }

@@ -3,16 +3,19 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include "dot/C/Component.hpp"
+// #include "dot/Containers/Quadtree.hpp"
 
 namespace dot
 {
+
+template <typename T>
+class Quadtree;
+
 struct Manifold
 {
 	bool colliding = false;
 	sf::FloatRect other;
 }; // struct Manifold
-
-class CollisionTree;
 
 class Collider : public Component, public std::enable_shared_from_this<dot::Collider>
 {
@@ -27,7 +30,9 @@ public:
 	virtual void setCollidable(const sf::FloatRect& rect) = 0;
 	virtual sf::FloatRect getCollidable() = 0;
 
-	void setCollisionTree(CollisionTree* tree);
+	virtual sf::FloatRect getBounds() = 0;
+	
+	void setTree(Quadtree<Collider>* tree);
 
 	unsigned getLayer() const;
 
@@ -37,7 +42,7 @@ public:
 private:
 	unsigned m_layer;
 
-	CollisionTree* m_containingTree;
+	Quadtree<Collider>* m_containingTree;
 };
 
 }; // namespace dot

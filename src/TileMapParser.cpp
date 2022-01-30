@@ -66,7 +66,7 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 				sprite->load(tileInfo->textureID);
 				sprite->setTextureRect(tileInfo->textureRect);
 				sprite->setScale(tileScale, tileScale);
-				sprite->setOrigin(tilewidth/2, tileheight/2);
+				// sprite->setOrigin(tilewidth/2, tileheight/2);
 
 				sprite->setSortOrder(sortOrder);
 				sprite->setDrawLayer(1);
@@ -77,17 +77,10 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 			tileObject->transform->setPosition(x, y);
 			tileObject->transform->setStatic(true);
 
-			if (layer.first == "Collisions")
+			if (layer.first.find("Collisions") != std::string::npos)
 			{
 				// std::cout << "Collisions here" << std::endl;
-				auto collider = tileObject->addComponent<dot::BoxCollider>();
-				float left = x - (tilewidth * tileScale);
-				float top = y - (tileheight * tileScale);
-
-				float width = tilewidth * tileScale;
-				float height = tileheight * tileScale;
-
-				collider->setCollidable(sf::FloatRect(left, top, width, height));
+				auto collider = tileObject->addComponent<dot::SpriteBoxCollider>();
 				collider->setLayer(1);
 			}
 			tileObjects.emplace_back(tileObject);

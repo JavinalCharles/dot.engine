@@ -75,3 +75,7 @@ sf::FloatRect SpriteBoxCollider::getCollidable()
 	// Debug::log("SpriteBoxCollider::getCollidable()");
 	return m_drawable->getGlobalBounds();
 }
+sf::FloatRect SpriteBoxCollider::getBounds()
+{
+	return m_drawable->getGlobalBounds();
+}

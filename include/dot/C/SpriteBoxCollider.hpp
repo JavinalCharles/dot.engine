@@ -19,7 +19,7 @@ public:
 
 	virtual void setCollidable(const sf::FloatRect& rect) override;
 	virtual sf::FloatRect getCollidable() override;
-
+	virtual sf::FloatRect getBounds() override;
 
 private:
 	std::shared_ptr<dot::Drawable> m_drawable;

@@ -1,12 +1,12 @@
 #pragma once
 
 #include <memory>
-#include "dot/C/BoxCollider.hpp"
+#include "dot/C/Collider.hpp"
 
+using dot::Collider;
 namespace dot
 {
 
-using dot::Collider;
 
 class Collidable
 {
