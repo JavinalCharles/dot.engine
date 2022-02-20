@@ -12,13 +12,13 @@ using dot::Component;
 using dot::Animation;
 using dot::Sprite;
 using dot::AnimationAction;
-using dot::CardinalDirection;
+// using dot::CardinalDirection;
 
 
 namespace dot
 {
 
-using AnimationList = std::unordered_map<CardinalDirection, std::shared_ptr<Animation>, dot::EnumClassHash>;
+// using AnimationList = std::unordered_map<unsigned, std::shared_ptr<Animation>, dot::EnumClassHash>;
 
 class AnimationComponent : public Component
 {
@@ -28,26 +28,26 @@ public:
 	void awake() override;
 	void update(float deltaTime) override;
 
-	void addAnimation(unsigned state, AnimationList& animationList);
+	void addAnimation(unsigned state, std::shared_ptr<Animation> animation);
 
 	void setAnimationState(unsigned state);
 
 	unsigned getAnimationState() const;
 
-	void setAnimationDirection(CardinalDirection dir);
+	// void setAnimationDirection(CardinalDirection dir);
 
-	void addAnimationAction(unsigned state, CardinalDirection dir, unsigned frame, AnimationAction action);
+	void addAnimationAction(unsigned state, unsigned frame, AnimationAction action);
 
-	void setDirectionalAnimations(bool allowDirectionalAnimation);
+	// void setDirectionalAnimations(bool allowDirectionalAnimation);
 private:
 	std::shared_ptr<Sprite> m_sprite;
-	std::unordered_map<unsigned, AnimationList, EnumClassHash> m_animations;
+	std::unordered_map<unsigned, std::shared_ptr<Animation>, dot::EnumClassHash> m_animations;
 	std::pair<unsigned, std::shared_ptr<Animation>> m_currentAnimation;
-	CardinalDirection m_currentDirection;
+	// CardinalDirection m_currentDirection;
 
-	std::shared_ptr<dot::Direction> m_direction;
+	// std::shared_ptr<dot::Direction> m_direction;
 
-	bool m_allowDirectionalAnimations;
+	// bool m_allowDirectionalAnimations;
 }; // class ANimationComponent
 
 }; // namespace dot

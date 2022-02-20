@@ -2,6 +2,7 @@
 
 std::vector<sf::RectangleShape> Debug::rects = {};
 std::vector<std::array<sf::Vertex, 2>> Debug::lines = {};
+std::vector<sf::Vertex> Debug::points = {};
 
 void Debug::render(Window& window)
 {
@@ -16,6 +17,18 @@ void Debug::render(Window& window)
 		window.render(line, 2, sf::Lines);
 	}
 	lines.clear();
+
+	if (points.size() > 0)
+	{
+		sf::Vertex allPoints[points.size()];
+		for (int i = 0; i < points.size(); ++i)
+		{
+			allPoints[i] = points[i];
+		}
+		window.render(allPoints, points.size(), sf::Points);
+	}
+	points.clear();
+
 }
 
 
@@ -34,6 +47,11 @@ void Debug::renderRect(const sf::FloatRect& rect, sf::Color colour)
 void Debug::renderLine(const sf::Vector2f& from, const sf::Vector2f& to, sf::Color colour)
 {
 	lines.push_back({sf::Vertex(from, colour), sf::Vertex(to, colour)});
+}
+
+void Debug::renderPoint(const sf::Vector2f& point, sf::Color colour)
+{
+	points.push_back(sf::Vertex(point, colour));
 }
 
 void Debug::log(const std::string& msg)
