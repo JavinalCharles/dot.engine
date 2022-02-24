@@ -12,6 +12,7 @@
 #include "dot/C/BoxCollider.hpp"
 #include "dot/C/SpriteBoxCollider.hpp"
 #include "dot/Utilities/Utils.hpp"
+#include "dot/C/DrawnLightBounds.hpp"
 
 using namespace rapidxml;
 

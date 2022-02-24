@@ -4,14 +4,7 @@
 #include <sstream>
 #include <iostream>
 
-using dot::TileMapParser;
-using dot::TextureAllocator;
-using dot::SharedContext;
-using dot::Entity;
-using dot::MapTiles;
-using dot::TileSet;
-using dot::TileSheets;
-using dot::MapLayer;
+using namespace dot;
 
 TileMapParser::TileMapParser(TextureAllocator& textureAllocator, SharedContext& context, const std::string& resourcesPath)
 	: m_textureAllocator(textureAllocator),
@@ -82,6 +75,8 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 				// std::cout << "Collisions here" << std::endl;
 				auto collider = tileObject->addComponent<dot::SpriteBoxCollider>();
 				collider->setLayer(1);
+
+				tileObject->addComponent<dot::DrawnLightBounds>();
 			}
 			tileObjects.emplace_back(tileObject);
 		}

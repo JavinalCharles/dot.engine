@@ -5,6 +5,7 @@
 #include "dot/E/Entity.hpp"
 #include "dot/S/RenderSystem.hpp"
 #include "dot/S/CollisionSystem.hpp"
+#include "dot/S/LightSystem.hpp"
 
 using dot::Entity;
 
@@ -35,6 +36,7 @@ private:
 	
 	dot::RenderSystem m_renderer;
 	dot::CollisionSystem m_collider;
+	dot::LightSystem m_lighter;
 
 }; // class EntitySystem
 

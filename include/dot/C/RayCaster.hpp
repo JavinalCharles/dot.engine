@@ -7,28 +7,22 @@
 
 namespace dot
 {
-class RayCaster : public dot::Drawable
+class RayCaster : public dot::Component
 {
 public:
-	RayCaster(dot::Entity*, unsigned sortOrder = 0u, unsigned drawLayer = 0u);
+	RayCaster(dot::Entity* owner);
 	virtual ~RayCaster();
-
-	virtual void lateUpdate(float deltaTime) override;
-
-	virtual void render(dot::Window& window) override;
 
 	void setMaxDistance(float maxDistance);
 	void setTileSize(const sf::Vector2f& size);
 	void setTileSize(float width, float height);
 	void setAngleAdjustment(float adjustment);
+	void setTo(const sf::Vector2f& to);
 
 
 	float getMaxDistance() const;
 	const sf::Vector2f& getTileSize() const;
-
-	virtual bool continueToDraw() const override;
-
-	sf::FloatRect getGlobalBounds() const override;
+	const sf::Vector2f& getTo() const;
 
 private:
 	float m_maxDistance;
@@ -37,8 +31,8 @@ private:
 	sf::Vector2f m_tileSize;
 
 	sf::Color m_rayColor;
-	sf::Vertex m_ray[2];
 
+	sf::Vector2f m_to;
 	static constexpr float PI = 3.14159265f;
 }; // class RayCaster
 

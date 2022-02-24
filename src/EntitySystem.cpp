@@ -20,6 +20,7 @@ void EntitySystem::update(float deltaTime)
 	}
 	m_collider.update();
 	m_renderer.update(deltaTime);
+	m_lighter.update();
 }
 
 void EntitySystem::lateUpdate(float deltaTime)
@@ -67,6 +68,7 @@ void EntitySystem::processNewObjects()
 
 		m_renderer.add(m_newEntities);
 		m_collider.add(m_newEntities);
+		m_lighter.add(m_newEntities);
 
 		m_newEntities.clear();
 	}
@@ -95,5 +97,6 @@ void EntitySystem::processRemovals()
 	{
 		m_renderer.processRemovals();
 		m_collider.processRemovals();
+		// TODO: Add removal for light system
 	}
 }
