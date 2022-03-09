@@ -11,8 +11,8 @@ DisappearingCollidable::DisappearingCollidable(dot::Entity* owner)
 
 void DisappearingCollidable::onCollisionEnter(std::shared_ptr<dot::Collider>& other)
 {
-	Debug::log("DisappearingCollidable::onCollisionEnter()");
-	Debug::log("Queueing object for removal: " + m_owner->instanceID->get());
+	// Debug::log("DisappearingCollidable::onCollisionEnter()");
+	// Debug::log("Queueing object for removal: " + m_owner->instanceID->get());
 	m_owner->queueForRemoval();
 }
 

@@ -50,7 +50,7 @@ void BoxCollider::setOrigin(const Origin& origin)
 void BoxCollider::setPosition()
 {
 	// Debug::log("BoxCollider::setPosition() - getting pos of : " + std::to_string(m_owner->instanceID->get()));
-	sf::Vector2f pos = m_owner->transform->getPosition();
+	sf::Vector2f pos = m_owner->getPosition();
 
 	switch(m_origin)
 	{
@@ -91,8 +91,7 @@ void BoxCollider::setPosition()
 
 void BoxCollider::resolveOverlap(const Manifold& m)
 {
-	auto transform = m_owner->transform;
-	if (transform->isStatic())
+	if (m_owner->isStatic())
 	{
 		return;
 	}
@@ -119,7 +118,7 @@ void BoxCollider::resolveOverlap(const Manifold& m)
 		{
 			resolve = -((rect1.left + rect1.width) - rect2.left);
 		}
-		transform->addPosition(resolve, 0);
+		m_owner->move(resolve, 0);
 	}
 	else
 	{
@@ -131,7 +130,7 @@ void BoxCollider::resolveOverlap(const Manifold& m)
 		{
 			resolve = -((rect1.top + rect1.height) - rect2.top);
 		}
-		transform->addPosition(0, resolve);
+		m_owner->move(0, resolve);
 	}
 }
 

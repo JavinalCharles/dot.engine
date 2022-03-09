@@ -27,8 +27,7 @@ Manifold SpriteBoxCollider::intersects(std::shared_ptr<dot::Collider> other)
 
 void SpriteBoxCollider::resolveOverlap(const Manifold& m)
 {
-	auto transform = m_owner->transform;
-	if (transform->isStatic()) return;
+	if (m_owner->isStatic()) return;
 
 	const sf::FloatRect& rect1 = this->getCollidable();
 	const sf::FloatRect& rect2 = m.other;
@@ -49,7 +48,7 @@ void SpriteBoxCollider::resolveOverlap(const Manifold& m)
 		{
 			resolve = -((rect1.left + rect1.width) - rect2.left);
 		}
-		transform->addPosition(resolve, 0);
+		m_owner->move(resolve, 0);
 	}
 	else
 	{
@@ -61,11 +60,11 @@ void SpriteBoxCollider::resolveOverlap(const Manifold& m)
 		{
 			resolve = -((rect1.top + rect1.height) - rect2.top);
 		}
-		transform->addPosition(0, resolve);
+		m_owner->move(0, resolve);
 	}
 }
 
-void SpriteBoxCollider::setCollidable(const sf::FloatRect& rect) 
+void SpriteBoxCollider::setCollidable(const sf::FloatRect& rect)
 {
 	// do nothing
 }

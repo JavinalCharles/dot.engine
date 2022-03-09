@@ -1,7 +1,6 @@
 #pragma once
 
 #include "dot/C/Drawable.hpp"
-#include "dot/C/Transform.hpp"
 #include "dot/ResourceAllocator.hpp"
 #include "dot/C/BoxCollider.hpp"
 

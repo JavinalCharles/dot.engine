@@ -22,6 +22,6 @@ private:
 
 	sf::Vector2f m_velocity;
 	sf::Vector2f m_maxVelocity;
-};
-	
+}; // class Velocity
+
 }; // namespace dot

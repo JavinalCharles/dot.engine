@@ -67,8 +67,8 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 
 			float x = tile->x * tilewidth * tileScale;
 			float y = tile->y * tileheight * tileScale;
-			tileObject->transform->setPosition(x, y);
-			tileObject->transform->setStatic(true);
+			tileObject->setPosition(x, y);
+			tileObject->setStatic(true);
 
 			if (layer.first.find("Collisions") != std::string::npos)
 			{
@@ -117,7 +117,7 @@ std::shared_ptr<TileSheets> TileMapParser::buildTileSheetData(xml_node<>* rootNo
 
 		// std::cout << "Reading .tsx file: " << m_resourcesPath << "/" << tilesheetNode->first_attribute("source")->value() << std::endl;
 		std::string tsxFile(m_resourcesPath + "/" +tilesheetNode->first_attribute("source")->value());
-		
+
 		std::ifstream f(tsxFile);
 		std::stringstream stream;
 		stream << f.rdbuf();
@@ -128,7 +128,7 @@ std::shared_ptr<TileSheets> TileMapParser::buildTileSheetData(xml_node<>* rootNo
 
 		strncpy(data, xmlFile.c_str(), xmlFile.size()+1);
 		// std::cout << "Read .tsx file: " << data << std::endl;
-		
+
 		rapidxml::xml_document<> doc;
 		doc.parse<0>(data);
 		xml_node<>* tsxNode = doc.first_node("tileset");
@@ -192,7 +192,7 @@ std::pair<std::string, std::shared_ptr<MapLayer>> TileMapParser::buildLayer(xml_
 						break;
 					}
 				}
-				// std::cout << "firstId: " << firstId << std::endl; 
+				// std::cout << "firstId: " << firstId << std::endl;
 				if (!tileSheet)
 				{
 					continue;
@@ -207,7 +207,7 @@ std::pair<std::string, std::shared_ptr<MapLayer>> TileMapParser::buildLayer(xml_
 				}
 
 				// std::cout << "tileID: " << tileId << " textureX: " << textureX << "; textureY: " << textureY << std::endl;
-				// std::cout << "Coords:" << textureX * tileSheet->tilewidth << ", " << textureY * tileSheet->tileheight << std::endl; 
+				// std::cout << "Coords:" << textureX * tileSheet->tilewidth << ", " << textureY * tileSheet->tileheight << std::endl;
 
 
 				std::shared_ptr<TileInfo> tileInfo = std::make_shared<TileInfo>(tileSheet->textureID, tileId, sf::IntRect(textureX * tileSheet->tilewidth, textureY * tileSheet->tileheight, tileSheet->tilewidth, tileSheet->tilewidth));
@@ -237,7 +237,7 @@ std::pair<std::string, std::shared_ptr<MapLayer>> TileMapParser::buildLayer(xml_
 	layer->isVisible = layerVisible;
 
 	std::cout << "Created a Map Layer: " << layerName << std::endl;
-	std::cout << "Object count: " << layer->tiles.size() << std::endl; 
+	std::cout << "Object count: " << layer->tiles.size() << std::endl;
 
 	return std::make_pair(layerName, layer);
 }

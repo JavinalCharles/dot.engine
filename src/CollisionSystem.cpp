@@ -38,7 +38,7 @@ void CollisionSystem::add(std::vector<std::shared_ptr<dot::Entity>>& entities)
 
 			m_collisionTree.insert(collider);
 
-			if (!collider->getOwner()->transform->isStatic())
+			if (!collider->getOwner()->isStatic())
 			{
 				m_nonStatics.push_back(collider);
 			}
@@ -142,7 +142,7 @@ void CollisionSystem::resolve()
 					Debug::renderRect(collision->getCollidable(), sf::Color::Red);
 					Debug::renderRect(collider->getCollidable(), sf::Color::Red);
 
-					if(collision->getOwner()->transform->isStatic())
+					if(collision->getOwner()->isStatic())
 					{
 						collider->resolveOverlap(m);
 					}
@@ -174,7 +174,7 @@ void CollisionSystem::processCollidingEntities()
 
 			itr = m_objectsColliding.erase(itr);
 		}
-		else 
+		else
 		{
 			Manifold m = first->intersects(second);
 			if (!m.colliding)

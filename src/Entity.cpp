@@ -8,7 +8,6 @@ Entity::Entity(dot::SharedContext* context)
 	: context(context),
 	m_queuedForRemoval(false)
 {
-	this->transform = this->addComponent<dot::Transform>();
 	this->instanceID = this->addComponent<dot::InstanceID>();
 }
 
@@ -59,19 +58,25 @@ void Entity::queueForRemoval()
 	this->m_queuedForRemoval = true;
 }
 
-bool Entity::isQueuedForRemoval()
+bool Entity::isQueuedForRemoval() const
 {
 	return m_queuedForRemoval;
 }
 
+void Entity::setStatic(bool isStatic)
+{
+	m_isStatic = isStatic;
+}
+
+bool Entity::isStatic() const
+{
+	return m_isStatic;
+}
+
 void Entity::onCollisionEnter(std::shared_ptr<dot::Collider>& other)
 {
-	// Debug::log("Entity::onCollisionEnter()");
-	// Debug::log("InstanceID: " + std::to_string(this->instanceID->get()));
-	// Debug::log("Collision: " + std::to_string(other->getOwner()->instanceID->get()) + "Layer: " + std::to_string(other->getLayer()));
 	sf::FloatRect rect = other->getCollidable();
-	// std::cout << "Collidable: " << rect.left << ", " << rect.top << ", " << rect.width << ", " << rect.height << std::endl;
-	// Debug::log("collidables size: " + std::to_string(m_collidables.size()));
+
 	for (const auto& component : m_collidables)
 	{
 		component->onCollisionEnter(other);

@@ -14,8 +14,8 @@ Sprite::Sprite(Entity* owner, unsigned sortOrder, unsigned drawLayer)
 
 void Sprite::awake()
 {
-	m_sprite.setPosition(m_owner->transform->getPosition());
-	m_sprite.setRotation(m_owner->transform->getRotation());
+	m_sprite.setPosition(m_owner->getPosition());
+	m_sprite.setRotation(m_owner->getRotation());
 }
 
 void Sprite::load(const std::string& filePath)
@@ -33,7 +33,7 @@ void Sprite::load(unsigned id)
 {
 	if (id > 0 && id != m_currentTextureID)
 	{
-		// std::cout << "Getting Textures from ID " << id << std::endl; 
+		// std::cout << "Getting Textures from ID " << id << std::endl;
 		if (m_owner->context->textures->has(id))
 		{
 			m_currentTextureID = id;
@@ -66,14 +66,11 @@ void Sprite::setRotation(float angle)
 
 void Sprite::lateUpdate(float deltaTime)
 {
-	sf::Vector2f pos = m_owner->transform->getPosition();
-	float rotation = m_owner->transform->getRotation();
-	// const sf::IntRect& spriteBounds = m_sprite.getTextureRect();
-	// const sf::Vector2f& spriteScale = m_sprite.getScale();
-
-	// m_sprite.setPosition(pos.x - ((abs(spriteBounds.width) * 0.5f) * spriteScale.x), pos.y - ((abs(spriteBounds.height) * 0.5f) * spriteScale.y));
-	m_sprite.setPosition(pos);
-	m_sprite.setRotation(rotation);
+	// sf::Vector2f pos = m_owner->getPosition();
+	// float rotation = m_owner->getRotation();
+	//
+	// m_sprite.setPosition(pos);
+	// m_sprite.setRotation(rotation);
 }
 
 void Sprite::render(Window& window)

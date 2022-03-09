@@ -2,10 +2,12 @@
 
 #include <vector>
 #include <memory>
+
+#include <SFML/Graphics.hpp>
+
 #include "dot/Window.hpp"
 #include "dot/C/Component.hpp"
 #include "dot/C/BoxCollider.hpp"
-#include "dot/C/Transform.hpp"
 #include "dot/C/InstanceID.hpp"
 #include "dot/C/Drawable.hpp"
 #include "dot/C/Collidable.hpp"
@@ -17,7 +19,7 @@ namespace dot
 using dot::Component;
 using dot::SharedContext;
 
-class Entity
+class Entity : public sf::Transformable
 {
 public:
 	Entity(SharedContext* context);
@@ -31,7 +33,7 @@ public:
 
 	/**
 	 * Entity::start()
-	 * - called after the awake() method. Use to 
+	 * - called after the awake() method. Use to
 	 * initialize member attributes.
 	 * */
 	virtual void start();
@@ -53,16 +55,24 @@ public:
 
 	std::shared_ptr<dot::Drawable> getDrawable();
 
-	bool isQueuedForRemoval();
+	bool isQueuedForRemoval() const;
 	void queueForRemoval();
-	
+
+	void setStatic(bool isStatic);
+	bool isStatic() const;
+
 	void onCollisionEnter(std::shared_ptr<dot::Collider>& other);
 	void onCollisionStay(std::shared_ptr<dot::Collider>& other);
 	void onCollisionExit(std::shared_ptr<dot::Collider>& other);
 
+	void addChild(std::shared_ptr<Entity> child);
+
+private: // Helper Methods
+
+
+
 public: // Public Attributes
 
-	std::shared_ptr<dot::Transform> transform;
 	std::shared_ptr<dot::InstanceID> instanceID;
 
 	dot::SharedContext* context;
@@ -71,8 +81,10 @@ private:
 	std::vector<std::shared_ptr<Component>> m_components;
 
 	bool m_queuedForRemoval;
+	bool m_isStatic;
 
 	std::shared_ptr<dot::Drawable> m_drawable;
+
 	std::vector<std::shared_ptr<dot::Collidable>> m_collidables;
 }; // class Entity
 

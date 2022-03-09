@@ -42,7 +42,7 @@ void LightSystem::update()
 {
 	for(auto& rayCaster : m_rayCasters)
 	{
-		cast(rayCaster->getOwner()->transform->getPosition(), rayCaster->getTo());
+		cast(rayCaster->getOwner()->getPosition(), rayCaster->getTo());
 	}
 }
 

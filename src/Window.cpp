@@ -31,14 +31,19 @@ void Window::clear(sf::Color color)
 	m_window.clear(color);
 }
 
-void Window::render(const sf::Drawable& drawable)
+void Window::render(const sf::Drawable& drawable, const sf::Transform& transform)
 {
-	m_window.draw(drawable);
+	m_window.draw(drawable, transform);
 }
 
 void Window::render(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type)
 {
 	m_window.draw(vertices, vertexCount, type);
+}
+
+void Window::render(const sf::Drawable& drawable)
+{
+	m_window.draw(drawable);
 }
 
 void Window::display()

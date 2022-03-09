@@ -12,8 +12,9 @@ class Drawable : public dot::Component
 public:
 	Drawable(dot::Entity* owner, unsigned sortOrder = 0u, unsigned drawLayer = 0u);
 	virtual ~Drawable();
-	
+
 	virtual void render(dot::Window& window) = 0;
+	virtual void render(dot::Window& window, const sf::Transform& transform);
 
 	void setSortOrder(unsigned order);
 	unsigned getSortOrder() const;

@@ -12,9 +12,7 @@ Velocity::Velocity(dot::Entity* owner)
 
 void Velocity::update(float deltaTime)
 {
-
-
-	m_owner->transform->addPosition(m_velocity * deltaTime);
+	m_owner->move(m_velocity * deltaTime);
 }
 
 void Velocity::lateUpdate(float deltaTime)

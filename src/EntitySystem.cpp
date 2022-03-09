@@ -97,6 +97,7 @@ void EntitySystem::processRemovals()
 	{
 		m_renderer.processRemovals();
 		m_collider.processRemovals();
+		m_lighter.processRemovals();
 		// TODO: Add removal for light system
 	}
 }
