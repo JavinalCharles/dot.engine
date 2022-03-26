@@ -98,3 +98,14 @@ void Entity::onCollisionExit(std::shared_ptr<dot::Collider>& other)
 		component->onCollisionExit(other);
 	}
 }
+
+// void Entity::setParent(dot::Entity* parent)
+// {
+// 	this->n_parent = parent;
+// }
+//
+// void Entity::addChild(std::shared_ptr<dot::Entity> child)
+// {
+// 	child->m_parent = this;
+// 	m_children.push_back(child);
+// }

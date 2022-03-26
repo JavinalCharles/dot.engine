@@ -75,7 +75,13 @@ void Sprite::lateUpdate(float deltaTime)
 
 void Sprite::render(Window& window)
 {
-	window.render(m_sprite);
+	window.render(m_sprite, m_owner->getTransform());
+}
+
+void Sprite::render(Window& window, const sf::Transform& transform)
+{
+	sf::Transform combinedTransform = transform * m_owner->getTransform();
+	window.render(m_sprite, combinedTransform);
 }
 
 void Sprite::setScale(float x, float y)

@@ -1,48 +1,41 @@
 #include "dot/C/SceneGraph.hpp"
 #include "dot/E/Entity.hpp"
+#include "dot/Debug/Debug.hpp"
 
 using dot::SceneNode;
 using dot::SceneGraph;
 
-SceneNode::SceneNode(std::shared_ptr<dot::Entity> entity, SceneNode* parent)
+SceneNode::SceneNode(dot::Entity* entity, SceneNode* parent)
 	: m_entity(entity),
 	m_parent(parent)
 {
 }
 
-void SceneNode::render(Window& window)
-{
-	sf::Transform transform = m_entity->getTransform();
-	auto drawable = m_entity->getDrawable();
-	if (drawable != nullptr)
-		drawable->render(window, transform);
 
-	this->renderChildren(window, transform);
+SceneNode::~SceneNode()
+{
+	this->clear();
 }
 
 void SceneNode::render(Window& window, const sf::Transform& transform)
 {
-	sf::Transform combinedTransform = transform * m_entity->getTransform();
-	auto drawable = m_entity->getDrawable();
-	if(drawable != nullptr)
-		drawable->render(window, combinedTransform);
-
-	this->renderChildren(window, combinedTransform);
-}
-
-void SceneNode::addChild(std::shared_ptr<dot::Entity> childEntity)
-{
-	m_children.push_back(std::make_shared<SceneNode>(childEntity, this));
-}
-
-sf::FloatRect SceneNode::getGlobalBounds() const
-{
-	sf::FloatRect rect(m_entity->getPosition(), sf::Vector2f(1.f,1.f));
-	for (auto& child: m_children)
+	// DO NOT RENDER ON ROOT BRANCH
+	if(m_parent != nullptr)
 	{
-		rect = child->getGlobalBounds(rect);
+		sf::Transform combinedTransform = transform *
+		m_entity->getTransform();
+		auto drawable = m_entity->getDrawable();
+		if(drawable != nullptr)
+		{
+			drawable->render(window, combinedTransform);
+		}
+
+		this->renderChildren(window, combinedTransform);
 	}
-	return rect;
+	else
+	{
+		this->renderChildren(window, transform);
+	}
 }
 
 void SceneNode::renderChildren(dot::Window& window, const sf::Transform& transform)
@@ -53,32 +46,46 @@ void SceneNode::renderChildren(dot::Window& window, const sf::Transform& transfo
 	}
 }
 
+void SceneNode::addChild(std::shared_ptr<dot::Entity> child)
+{
+	m_children.push_back(std::make_shared<SceneNode>(child.get(), this));
+}
+
+sf::FloatRect SceneNode::getGlobalBounds(const sf::Vector2f& currentPos) const
+{
+	// TODO: Properly measure GlobalBounds
+
+
+	sf::FloatRect rect(currentPos, sf::Vector2f(1.f, 1.f));
+	// for (auto& child: m_children)
+	// {
+	// 	rect = child->getGlobalBounds(rect);
+	// }
+	return rect;
+}
+
+
+
 sf::FloatRect SceneNode::getGlobalBounds(const sf::FloatRect& currentRect) const
 {
-	sf::FloatRect resRect(currentRect);
-	auto drawable = m_entity->getDrawable();
-	if (drawable != nullptr)
+	// TODO: Properly measure GlobalBounds
+
+	return currentRect;
+}
+
+void SceneNode::clear()
+{
+	clearChildren();
+	m_entity = nullptr;
+}
+
+void SceneNode::clearChildren()
+{
+	for(auto& child: m_children)
 	{
-		sf::FloatRect rect2(drawable->getGlobalBounds());
-		float left = (currentRect.left < rect2.left) ? currentRect.left : rect2.left;
-		float top = (currentRect.top < rect2.top) ? currentRect.top : rect2.top;
-		sf::Vector2f p1(currentRect.left+currentRect.width, currentRect.top+currentRect.width);
-		sf::Vector2f p2(rect2.left+rect2.width, rect2.top+rect2.width);
-		float width = left - (p1.x > p2.x ? p1.x : p2.x );
-		float height = top - (p1.y > p2.y ? p1.y : p2.y );
-
-		resRect.left = left;
-		resRect.top = top;
-		resRect.width = width;
-		resRect.height = height;
+		child->clear();
 	}
-
-	for (auto& child: m_children)
-	{
-		resRect = child->getGlobalBounds(resRect);
-	}
-
-	return resRect;
+	m_children.clear();
 }
 
 /********************
@@ -86,14 +93,19 @@ sf::FloatRect SceneNode::getGlobalBounds(const sf::FloatRect& currentRect) const
 *********************/
 SceneGraph::SceneGraph(dot::Entity* owner, unsigned sortOrder, unsigned drawLayer)
 	: dot::Drawable(owner, sortOrder, drawLayer),
-	m_node(std::shared_ptr<dot::Entity>(owner))
+	m_node(owner, nullptr)
 {
 
 }
 
+SceneGraph::~SceneGraph()
+{
+	m_node.clear();
+}
+
 void SceneGraph::render(Window& window)
 {
-	m_node.render(window);
+	m_node.render(window, m_owner->getTransform());
 }
 
 void SceneGraph::render(Window& window, const sf::Transform& transform)
@@ -101,6 +113,14 @@ void SceneGraph::render(Window& window, const sf::Transform& transform)
 	m_node.render(window, transform);
 }
 
+void SceneGraph::lateUpdate(float deltaTime)
+{
+	if(!continueToDraw())
+	{
+		Debug::log("SceneGraph::lateUpdate() - object: " + std::to_string(m_owner->instanceID->get()) + " being cleared");
+		m_node.clear();
+	}
+}
 void SceneGraph::addChild(std::shared_ptr<dot::Entity> childEntity)
 {
 	m_node.addChild(childEntity);
@@ -108,5 +128,12 @@ void SceneGraph::addChild(std::shared_ptr<dot::Entity> childEntity)
 
 sf::FloatRect SceneGraph::getGlobalBounds() const
 {
-	return m_node.getGlobalBounds();
+	sf::FloatRect rect(m_owner->getPosition(), sf::Vector2f(1.f, 1.f));
+	Debug::renderRect(rect);
+	return rect;
+}
+
+bool SceneGraph::continueToDraw() const
+{
+	return !m_owner->isQueuedForRemoval();
 }

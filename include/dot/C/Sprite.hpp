@@ -29,6 +29,8 @@ public:
 
 	virtual void render(Window& window) override;
 
+	virtual void render(Window& window, const sf::Transform& transform) override;
+
 	void setTextureRect(int x, int y, int width, int height);
 	void setTextureRect(const sf::IntRect& rect);
 	void setScale(float x, float y);

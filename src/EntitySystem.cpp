@@ -6,10 +6,10 @@ using dot::EntitySystem;
 
 EntitySystem::~EntitySystem()
 {
-	Debug::log("EntitySystem::~EntitySystem() entered");
+	// Debug::log("EntitySystem::~EntitySystem() entered");
 	m_entities.clear();
 	m_newEntities.clear();
-	Debug::log("EntitySystem::~EntitySystem() exiting");
+	// Debug::log("EntitySystem::~EntitySystem() exiting");
 }
 
 void EntitySystem::update(float deltaTime)

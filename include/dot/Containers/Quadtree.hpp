@@ -230,11 +230,11 @@ void Quadtree<T>::removeID(unsigned long long id)
 template<typename T>
 void Quadtree<T>::updatePosition(std::shared_ptr<T> object, bool originalTree)
 {
-	Debug::log("Quadtree<T>::updatePosition()");
+	// Debug::log("Quadtree<T>::updatePosition()");
 	sf::FloatRect bounds = object->getBounds();
 	unsigned long long id = object->getOwner()->instanceID->get();
-	Debug::log("Object ID: " + std::to_string(id));
-	Debug::log("Current level: " + std::to_string(m_level));
+	// Debug::log("Object ID: " + std::to_string(id));
+	// Debug::log("Current level: " + std::to_string(m_level));
 	/**
 	 * Checks if the bounds is still
 	 * within the bounds of the collision tree.
@@ -331,7 +331,7 @@ int Quadtree<T>::getChildIndexForObject(const sf::FloatRect& objectBounds)
     bool south = objectBounds.top > horizontalDividingLine;
     bool west = objectBounds.left < verticalDividingLine && (objectBounds.left + objectBounds.width < verticalDividingLine);
     bool east = objectBounds.left > verticalDividingLine;
-    
+
     if(east)
     {
         if(north)
@@ -354,7 +354,7 @@ int Quadtree<T>::getChildIndexForObject(const sf::FloatRect& objectBounds)
             index = childSW;
         }
     }
-    
+
     return index;
 }
 

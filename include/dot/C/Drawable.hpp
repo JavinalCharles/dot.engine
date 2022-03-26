@@ -14,7 +14,7 @@ public:
 	virtual ~Drawable();
 
 	virtual void render(dot::Window& window) = 0;
-	virtual void render(dot::Window& window, const sf::Transform& transform);
+	virtual void render(dot::Window& window, const sf::Transform& transform) = 0;
 
 	void setSortOrder(unsigned order);
 	unsigned getSortOrder() const;

@@ -41,6 +41,7 @@ public:
 	virtual void update(float deltaTime);
 	virtual void lateUpdate(float deltaTime);
 	virtual void render(Window& window);
+	// virtual void render(Window& window, const sf::Transform& transform);
 
 	/**
 	 * Entity::addComponent<T>()
@@ -65,11 +66,11 @@ public:
 	void onCollisionStay(std::shared_ptr<dot::Collider>& other);
 	void onCollisionExit(std::shared_ptr<dot::Collider>& other);
 
-	void addChild(std::shared_ptr<Entity> child);
+	// void setParent(dot::Entity* parent);
+	// void addChild(std::shared_ptr<Entity> child);
 
 private: // Helper Methods
-
-
+	// void renderChildren(Window& window, const sf::Transform& transform);
 
 public: // Public Attributes
 
@@ -86,6 +87,9 @@ private:
 	std::shared_ptr<dot::Drawable> m_drawable;
 
 	std::vector<std::shared_ptr<dot::Collidable>> m_collidables;
+
+	// dot::Entity* m_parent;
+	// std::vector<std::shared_ptr<dot::Entity>> m_children;
 }; // class Entity
 
 /************************************
