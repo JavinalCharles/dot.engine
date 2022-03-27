@@ -66,16 +66,16 @@ void Sprite::setRotation(float angle)
 
 void Sprite::lateUpdate(float deltaTime)
 {
-	// sf::Vector2f pos = m_owner->getPosition();
-	// float rotation = m_owner->getRotation();
-	//
-	// m_sprite.setPosition(pos);
-	// m_sprite.setRotation(rotation);
+	sf::Vector2f pos = m_owner->getPosition();
+	float rotation = m_owner->getRotation();
+
+	m_sprite.setPosition(pos);
+	m_sprite.setRotation(rotation);
 }
 
 void Sprite::render(Window& window)
 {
-	window.render(m_sprite, m_owner->getTransform());
+	window.render(m_sprite);
 }
 
 void Sprite::render(Window& window, const sf::Transform& transform)

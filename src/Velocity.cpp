@@ -5,7 +5,7 @@ using dot::Velocity;
 
 Velocity::Velocity(dot::Entity* owner)
 	: dot::Component(owner),
-	m_maxVelocity(500.f, 500.f)
+	m_maxVelocity(1000.f, 1000.f)
 {
 
 }
