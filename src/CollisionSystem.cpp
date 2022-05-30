@@ -12,11 +12,9 @@ CollisionSystem::CollisionSystem()
 
 CollisionSystem::~CollisionSystem()
 {
-	// Debug::log("CollisionSystem::~CollisionSystem() entered");
 	m_collisionTree.clear();
 	m_objectsColliding.clear();
 	m_collisionLayers.clear();
-	// Debug::log("CollisionSystem::~CollisionSystem() exiting");
 }
 
 void CollisionSystem::addCollisionLayers(unsigned collisionLayer, dot::Bitmask collisionBitmask)
@@ -26,22 +24,22 @@ void CollisionSystem::addCollisionLayers(unsigned collisionLayer, dot::Bitmask c
 
 void CollisionSystem::add(std::vector<std::shared_ptr<dot::Entity>>& entities)
 {
-	// Debug::log("Adding " + std::to_tring(entities.size()) + " colliders to the collision system");
 	for (auto& e : entities)
 	{
-		auto collider = e->getComponent<dot::Collider>();
-		if(collider != nullptr)
+		this->add(e);
+	}
+}
+
+void CollisionSystem::add(std::shared_ptr<dot::Entity>& entity)
+{
+	auto collider = entity->getComponent<dot::Collider>();
+	if (collider != nullptr) 
+	{
+		m_collisionTree.insert(collider);
+
+		if (!collider->getOwner()->isStatic())
 		{
-			// unsigned layer = collider->getLayer();
-
-			// auto itr = m_collidables.find(layer);
-
-			m_collisionTree.insert(collider);
-
-			if (!collider->getOwner()->isStatic())
-			{
-				m_nonStatics.push_back(collider);
-			}
+			m_nonStatics.push_back(collider);
 		}
 	}
 }
@@ -87,21 +85,11 @@ void CollisionSystem::updatePositions()
 	}
 }
 
-void CollisionSystem::update()
+void CollisionSystem::update(float deltaTime)
 {
 	updatePositions();
-	// m_collisionTree.drawDebug();
+
 	processCollidingEntities();
-
-	// m_collisionTree.clear();
-
-	// for (auto maps = m_collidables.begin(); maps != m_collidables.end(); ++maps)
-	// {
-	// 	for (auto collidable : maps->second)
-	// 	{
-	// 		m_collisionTree.insert(collidable);
-	// 	}
-	// }
 
 	resolve();
 }
@@ -112,6 +100,7 @@ void CollisionSystem::resolve()
 	{
 		if (m_collisionLayers[collider->getLayer()].getMask() == 0)
 		{
+			// Layer doesn't collide with any other layer.
 			continue;
 		}
 

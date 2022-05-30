@@ -58,7 +58,7 @@ private:
 }; // class Quadtree
 
 typedef Quadtree<dot::Collider> CollisionTree;
-typedef Quadtree<dot::LightBounds> LightBoundsTree;
+// typedef Quadtree<dot::LightBounds> LightBoundsTree;
 
 
 template<typename T>
@@ -153,9 +153,9 @@ void Quadtree<T>::insert(std::shared_ptr<T> object)
 template<typename T>
 void Quadtree<T>::remove(std::shared_ptr<T> object)
 {
-	Debug::log("Quadtree<T>::remove()");
+	// Debug::log("Quadtree<T>::remove()");
 	unsigned long long id = object->getOwner()->instanceID->get();
-	Debug::log("InstanceID: " + std::to_string(id));
+	// Debug::log("InstanceID: " + std::to_string(id));
 	int index = getChildIndexForObject(object->getBounds());
 
 	if (index == thisTree || m_children[index] == nullptr)
@@ -165,7 +165,7 @@ void Quadtree<T>::remove(std::shared_ptr<T> object)
 	}
 	else
 	{
-		Debug::log("Removing to a child tree");
+		// Debug::log("Removing to a child tree");
 		return m_children[index]->remove(object);
 	}
 }

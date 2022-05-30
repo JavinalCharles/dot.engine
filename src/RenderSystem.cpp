@@ -25,7 +25,7 @@ void RenderSystem::add(std::vector<std::shared_ptr<Entity>>& entities)
 	}
 }
 
-void RenderSystem::add(std::shared_ptr<Entity> entity)
+void RenderSystem::add(std::shared_ptr<Entity>& entity)
 {
 	std::shared_ptr<Drawable> entityDrawable = entity->getDrawable();
 	

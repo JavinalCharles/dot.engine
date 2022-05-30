@@ -41,7 +41,6 @@ public:
 	virtual void update(float deltaTime);
 	virtual void lateUpdate(float deltaTime);
 	virtual void render(Window& window);
-	// virtual void render(Window& window, const sf::Transform& transform);
 
 	/**
 	 * Entity::addComponent<T>()

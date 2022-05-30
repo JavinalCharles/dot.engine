@@ -3,6 +3,7 @@
 #include <map>
 #include "dot/C/Drawable.hpp"
 #include "dot/E/Entity.hpp"
+#include "dot/S/RenderModule.hpp"
 
 using dot::Drawable;
 using dot::Entity;
@@ -12,18 +13,18 @@ using drawLayer = unsigned;
 
 namespace dot
 {
-class RenderSystem
+class RenderSystem : public dot::RenderModule
 {
 public:
-	~RenderSystem();
+	virtual ~RenderSystem();
 
-	void add(std::vector<std::shared_ptr<Entity>>& entities);
-	void add(std::shared_ptr<Entity> entity);
-	void processRemovals();
+	virtual void add(std::vector<std::shared_ptr<Entity>>& entities) override;
+	virtual void add(std::shared_ptr<Entity>& entity) override;
+	virtual void processRemovals() override;
 
-	void update(float deltaTime);
+	virtual void update(float deltaTime) override;
 
-	void render(Window& window);
+	virtual void render(Window& window) override;
 private:
 	void sort();
 

@@ -9,13 +9,13 @@
 namespace dot
 {
 
-class EntitySystem;
+class EntityManager;
 
 struct SharedContext
 {
 	dot::KeyboardInput* keyInput;
 	dot::MouseInput* mouseInput;
-	dot::EntitySystem* entities;
+	dot::EntityManager* entities;
 	dot::WorkingDirectory* workingDir;
 	dot::TextureAllocator* textures;
 

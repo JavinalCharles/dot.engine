@@ -76,7 +76,7 @@ std::vector<std::shared_ptr<dot::Entity>> TileMapParser::parse(const std::string
 				auto collider = tileObject->addComponent<dot::SpriteBoxCollider>();
 				collider->setLayer(1);
 
-				tileObject->addComponent<dot::DrawnLightBounds>();
+				// tileObject->addComponent<dot::DrawnLightBounds>();
 			}
 			tileObjects.emplace_back(tileObject);
 		}

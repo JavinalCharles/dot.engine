@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <cstdarg>
 
+#include "dot/S/SystemModule.hpp"
 #include "dot/E/Entity.hpp"
 #include "dot/C/Collider.hpp"
 #include "dot/Containers/Quadtree.hpp"
@@ -16,23 +17,25 @@
 
 namespace dot
 {
-class CollisionSystem
+class CollisionSystem : public dot::SystemModule
 {
 public:
 	CollisionSystem();
 
-	~CollisionSystem();
+	virtual ~CollisionSystem();
 
-	void add(std::vector<std::shared_ptr<dot::Entity>>& entities);
+	virtual void add(std::vector<std::shared_ptr<dot::Entity>>& entities) override;
+	virtual void add(std::shared_ptr<dot::Entity>& entity) override;
+
+	virtual void update(float deltaTime) override;
+
 	void processRemovals();
 
 	void addCollisionLayers(unsigned collisionLayer, dot::Bitmask collisionBitmask);
 
 	void updatePositions();
 
-
 	void resolve();
-	void update();
 
 private:
 	void processCollidingEntities();
