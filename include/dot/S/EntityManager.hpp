@@ -8,7 +8,6 @@
 
 #include "dot/S/RenderSystem.hpp"
 #include "dot/S/CollisionSystem.hpp"
-#include "dot/S/LightSystem.hpp"
 
 using dot::Entity;
 

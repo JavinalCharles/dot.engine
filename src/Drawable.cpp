@@ -1,4 +1,5 @@
 #include "dot/C/Drawable.hpp"
+#include "dot/Containers/Quadtree.hpp"
 
 using dot::Component;
 using dot::Drawable;
@@ -9,7 +10,8 @@ using dot::Window;
 Drawable::Drawable(Entity* owner, unsigned sortOrder, unsigned drawLayer)
 	: Component(owner),
 	m_sortOrder(sortOrder), 
-	m_layer(drawLayer)
+	m_layer(drawLayer),
+	m_containingTree(nullptr)
 {
 
 }
@@ -37,4 +39,20 @@ void Drawable::setDrawLayer(unsigned layer)
 unsigned Drawable::getDrawLayer() const
 {
 	return m_layer;
+}
+
+void Drawable::updateTree()
+{
+	if (m_containingTree == nullptr)
+		return;
+
+	if (m_containingTree->getBounds().intersects(this->getBounds()))
+	{
+		m_containingTree->updatePosition(shared_from_this());
+	}
+}
+
+void Drawable::setTree(Quadtree<dot::Drawable>* tree)
+{
+	m_containingTree = tree;
 }

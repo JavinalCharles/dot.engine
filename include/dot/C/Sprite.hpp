@@ -31,6 +31,8 @@ public:
 
 	virtual void render(Window& window, const sf::Transform& transform) override;
 
+	void setColor(sf::Color color);
+
 	void setTextureRect(int x, int y, int width, int height);
 	void setTextureRect(const sf::IntRect& rect);
 	void setScale(float x, float y);
@@ -41,9 +43,13 @@ public:
 	void setOrigin(float x, float y);
 	void setOrigin(const sf::Vector2f& factors);
 
+	sf::Color getColor() const;
+
 	sf::IntRect getTextureRect() const;
 	sf::FloatRect getLocalBounds() const;
 	sf::FloatRect getGlobalBounds() const override;
+	sf::FloatRect getBounds() const override;
+
 	sf::Vector2f getScale() const;
 
 	virtual bool continueToDraw() const override;

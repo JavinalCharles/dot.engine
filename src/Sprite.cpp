@@ -9,13 +9,14 @@ Sprite::Sprite(Entity* owner, unsigned sortOrder, unsigned drawLayer)
 	: Drawable(owner, sortOrder, drawLayer),
 	m_currentTextureID(0)
 {
-
+	m_sprite.setColor(sf::Color(64, 64, 128));
 }
 
 void Sprite::awake()
 {
 	m_sprite.setPosition(m_owner->getPosition());
 	m_sprite.setRotation(m_owner->getRotation());
+	// m_sprite.setColor(sf::Color(120, 120, 200));
 }
 
 void Sprite::load(const std::string& filePath)
@@ -42,6 +43,11 @@ void Sprite::load(unsigned id)
 			// std::cout << "Texture set: " << id << std::endl;
 		}
 	}
+}
+
+void Sprite::setColor(sf::Color color)
+{
+	m_sprite.setColor(color);
 }
 
 void Sprite::setTextureRect(int x, int y, int width, int height)
@@ -104,6 +110,11 @@ void Sprite::setOrigin(const sf::Vector2f& factor)
 	m_sprite.setOrigin(factor);
 }
 
+sf::Color Sprite::getColor() const
+{
+	return m_sprite.getColor();
+}
+
 sf::IntRect Sprite::getTextureRect() const
 {
 	return m_sprite.getTextureRect();
@@ -115,6 +126,11 @@ sf::FloatRect Sprite::getLocalBounds() const
 }
 
 sf::FloatRect Sprite::getGlobalBounds() const
+{
+	return m_sprite.getGlobalBounds();
+}
+
+sf::FloatRect Sprite::getBounds() const
 {
 	return m_sprite.getGlobalBounds();
 }

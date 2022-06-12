@@ -15,6 +15,7 @@ public:
 
 	void clear(sf::Color color = sf::Color::Black);
 	void render(const sf::Drawable& drawable, const sf::Transform& transform);
+	void render(const sf::Drawable& drawable, const sf::BlendMode& blendMode);
 	void render(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type);
 	void render(const sf::Drawable& drawable);
 	void display();

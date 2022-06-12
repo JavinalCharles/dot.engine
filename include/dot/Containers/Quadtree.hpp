@@ -3,7 +3,6 @@
 #include <memory>
 #include <vector>
 #include "dot/C/Collider.hpp"
-#include "dot/C/LightBounds.hpp"
 #include "dot/E/Entity.hpp"
 #include "dot/Debug/Debug.hpp"
 
@@ -58,8 +57,7 @@ private:
 }; // class Quadtree
 
 typedef Quadtree<dot::Collider> CollisionTree;
-// typedef Quadtree<dot::LightBounds> LightBoundsTree;
-
+typedef Quadtree<dot::Drawable> DrawableTree;
 
 template<typename T>
 Quadtree<T>::Quadtree()
@@ -160,7 +158,7 @@ void Quadtree<T>::remove(std::shared_ptr<T> object)
 
 	if (index == thisTree || m_children[index] == nullptr)
 	{
-		Debug::log("Removing from current tree");
+		// Debug::log("Removing from current tree");
 		this->removeID(id);
 	}
 	else

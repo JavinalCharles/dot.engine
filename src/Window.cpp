@@ -36,6 +36,11 @@ void Window::render(const sf::Drawable& drawable, const sf::Transform& transform
 	m_window.draw(drawable, transform);
 }
 
+void Window::render(const sf::Drawable& drawable,const sf::BlendMode& blendMode)
+{
+	m_window.draw(drawable, blendMode);
+}
+
 void Window::render(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type)
 {
 	m_window.draw(vertices, vertexCount, type);
