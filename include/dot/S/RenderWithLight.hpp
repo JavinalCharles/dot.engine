@@ -30,7 +30,7 @@ private:
 
 	std::map<drawLayer, dot::DrawableTree> m_drawables;
 	
-	std::vector<std::shared_ptr<dot::LightBlend>> m_lightBlenders;
+	std::vector<std::shared_ptr<dot::LightBlend>> m_lightSources;
 
 	// static bool layerSort(std::shared_ptr<Drawable> a, std::shared_ptr<Drawable> b);
 }; // class RenderWithLight

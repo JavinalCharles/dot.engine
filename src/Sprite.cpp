@@ -9,14 +9,12 @@ Sprite::Sprite(Entity* owner, unsigned sortOrder, unsigned drawLayer)
 	: Drawable(owner, sortOrder, drawLayer),
 	m_currentTextureID(0)
 {
-	m_sprite.setColor(sf::Color(64, 64, 128));
 }
 
 void Sprite::awake()
 {
 	m_sprite.setPosition(m_owner->getPosition());
 	m_sprite.setRotation(m_owner->getRotation());
-	// m_sprite.setColor(sf::Color(120, 120, 200));
 }
 
 void Sprite::load(const std::string& filePath)

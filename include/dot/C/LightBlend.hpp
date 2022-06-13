@@ -13,6 +13,8 @@ public:
 	LightBlend(dot::Entity* owner);
 
 	virtual void render(dot::Window& window) = 0;
+
+	virtual bool reaches(const sf::FloatRect&rectBounds) const = 0;
 private:
 
 

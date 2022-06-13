@@ -16,21 +16,21 @@ void CircleLightBlend::awake()
 	sf::Image image;
 	image.create(912.f, 912.f, sf::Color::White);
 	sf::Vector2f origin(456.f, 456.f);
-	float magnitude = gmath::hypot(sf::Vector2f(0, 0), origin);
-	for(int x = 0; x < 912; ++x) {
-		for (int y = 0; y < 912; ++y) {
-			float dist = gmath::hypot(sf::Vector2f(x, y), origin);
-			uint8_t alpha = (1 - (dist / magnitude)) * 255;
-			image.setPixel(x, y, sf::Color(255, 255, 255, alpha));
-		}
-	}
+	// float magnitude = gmath::hypot(sf::Vector2f(0, 0), origin);
+	// for(int x = 0; x < 912; ++x) {
+	// 	for (int y = 0; y < 912; ++y) {
+	// 		float dist = gmath::hypot(sf::Vector2f(x, y), origin);
+	// 		uint8_t alpha = (1 - (dist / magnitude)) * 255;
+	// 		image.setPixel(x, y, sf::Color(255, 255, 255, alpha));
+	// 	}
+	// }
 
-	sf::Texture circleTexture;
-	circleTexture.loadFromImage(image);
+	// sf::Texture circleTexture;
+	// circleTexture.loadFromImage(image);
 
-	unsigned textureId = getOwner()->context->textures->add(circleTexture);
+	// unsigned textureId = getOwner()->context->textures->add(circleTexture);
 
-	m_circle.setTexture(getOwner()->context->textures->get(textureId).get());
+	// m_circle.setTexture(getOwner()->context->textures->get(textureId).get());
 	m_circle.setOrigin(origin);
 	m_circle.setPosition(m_owner->getPosition());
 }
@@ -43,4 +43,16 @@ void CircleLightBlend::lateUpdate(float deltaTime)
 void CircleLightBlend::render(dot::Window& window)
 {
 	window.render(m_circle, sf::BlendAdd);
+}
+
+bool CircleLightBlend::reaches(const sf::FloatRect& rect) const
+{
+	sf::Vector2f coord = m_circle.getPosition();
+	float radius = m_circle.getRadius();
+
+	return 
+		gmath::hypot(coord, sf::Vector2f(rect.left, rect.top)) <= radius ||
+		gmath::hypot(coord, sf::Vector2f(rect.left, rect.top+rect.height)) <= radius ||
+		gmath::hypot(coord, sf::Vector2f(rect.left + rect.width, rect.top)) <= radius ||
+		gmath::hypot(coord, sf::Vector2f(rect.left+rect.width, rect.top+rect.height)) <= radius;
 }

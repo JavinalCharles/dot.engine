@@ -9,7 +9,7 @@ using dot::Window;
 RenderWithLight::~RenderWithLight()
 {
 	m_drawables.clear();
-	m_lightBlenders.clear();
+	m_lightSources.clear();
 }
 
 void RenderWithLight::add(std::vector<std::shared_ptr<Entity>>& entities)
@@ -41,7 +41,7 @@ void RenderWithLight::add(std::shared_ptr<Entity>& entity)
 	std::shared_ptr<dot::LightBlend> lightBlend = entity->getComponent<dot::LightBlend>();
 	if (lightBlend != nullptr)
 	{
-		m_lightBlenders.push_back(lightBlend);
+		m_lightSources.push_back(lightBlend);
 	}
 }
 
@@ -51,13 +51,13 @@ void RenderWithLight::processRemovals()
 	{
 		layer.second.clearRemovedObjects();
 	}
-	auto iter = m_lightBlenders.begin();
-	while(iter != m_lightBlenders.end())
+	auto iter = m_lightSources.begin();
+	while(iter != m_lightSources.end())
 	{
 		auto obj = *iter;
 		if(obj->getOwner()->isQueuedForRemoval())
 		{
-			iter = m_lightBlenders.erase(iter);
+			iter = m_lightSources.erase(iter);
 		}
 		else {
 			++iter;
@@ -67,22 +67,21 @@ void RenderWithLight::processRemovals()
 
 void RenderWithLight::render(Window& window)
 {
-	sf::FloatRect rect = window.getViewSpace();
+	sf::FloatRect view = window.getViewSpace();
 
 	for (auto& layer : m_drawables)
 	{
-		std::vector<std::shared_ptr<dot::Drawable>> drawables = layer.second.search(rect);
+		std::vector<std::shared_ptr<dot::Drawable>> drawables = layer.second.search(view);
 		for(auto& drawable : drawables)
 		{
-			if (rect.intersects(drawable->getGlobalBounds()))
+			for (auto& light : m_lightSources)
 			{
-				drawable->render(window);
+				if(light->reaches(drawable->getGlobalBounds()))
+				{
+					drawable->render(window);
+					break;
+				}
 			}
 		}
-	}
-
-	for (auto& lightBlend : m_lightBlenders)
-	{
-		lightBlend->render(window);
 	}
 }

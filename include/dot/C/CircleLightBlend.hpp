@@ -15,6 +15,8 @@ public:
 	virtual void lateUpdate(float deltaTime) override;
 
 	virtual void render(dot::Window& window) override;
+
+	virtual bool reaches(const sf::FloatRect& rect) const override;
 private:
 	sf::CircleShape m_circle;
 
